@@ -2,12 +2,12 @@
 let main = document.querySelector('#main');
 let popUp = main.querySelector('.pop-up');
 let popCloseButton = main.querySelector('.pop-up__close-button');
-let popEdit = main.querySelector('.profile-info__button');
+let popEdit = main.querySelector('.profileInfo__button');
 function popClose(){
-    popUp.classList.add('pop-up__visible_hiden');
+    popUp.classList.add('pop-up__hide');
 }
 function popOpen(){
-    popUp.classList.remove('pop-up__visible_hiden');
+    popUp.classList.remove('pop-up__hide');
 }
 popCloseButton.addEventListener('click', popClose);
 popEdit.addEventListener('click', popOpen);
@@ -21,12 +21,12 @@ let saveButton = main.querySelector('.form__save-button');
 
 function formSubmitHandler (evt) {
     evt.preventDefault();
-    let name = main.querySelector('.profile-info__title');
-    let job = main.querySelector('.profile-info__subtitle');
+    let name = main.querySelector('.profileInfo__title');
+    let job = main.querySelector('.profileInfo__subtitle');
                               
     name.textContent = nameInput.value;
     job.textContent = jobInput.value;
-    popUp.classList.add('pop-up__visible_hiden');
+    popUp.classList.add('pop-up__hide');
 }
 
 saveButton.addEventListener('click', formSubmitHandler); 
