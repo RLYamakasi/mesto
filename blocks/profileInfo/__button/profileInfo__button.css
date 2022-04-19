@@ -3,9 +3,16 @@
     width: 24px;
     height: 24px;
     justify-self: flex-start;
-    align-self: flex-start;
+    align-self: center;
     cursor:pointer;
+    border:1px solid #FFFFFF;
+    background-color: black;
 }
 .profileInfo__button:hover{
     opacity: 0.6;
+}
+@media screen and (max-width:767px) {
+    .profileInfo__button{
+        justify-self: center;
+    }
 }

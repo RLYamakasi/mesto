@@ -10,7 +10,6 @@
 <body class="page">
     <header class="header">
         <img src="images/logo.svg" alt="Логотоип 'mesto' " class="header__logo">
-        <img src="images/Line.svg" alt="Линия" class="header__line">
     </header>
     <main id="main">
     <section class="profile">
@@ -18,57 +17,57 @@
         <div class="profileInfo">
             <h1 class="profileInfo__title">Жак-Ив Кусто</h1>
             <p class="profileInfo__subtitle">Исследователь океана</p>
-            <img src="images/Edit-Button.svg" alt="Кнопка отредактировать профиль" class="profileInfo__button">
+            <button class="profileInfo__button"><img src="images/edit-button.svg" alt="кнопка редактировать"></button>
         </div>
-        <img src="images/add-button.svg" alt="Кнопка добавить фотографию" class="profile__add-button">
+        <button class="profile__add-button"><img src="images/add-button.svg" alt="кнопка добавить"></button>
     </section>
     <section class="elements">
        <div class="element">
             <img src="images/Karachaevsk.jpg" alt="Особняк на холме" class="element__image">   
             <h2 class="element__text">Карачаевск</h2>  
-            <img src="images/like-button.svg" alt="Лайк" class="element__button">   
+            <button class="element__button"><img src="images/like-button.svg" alt="Лайк"></button>
         </div>
         <div class="element">
             <img src="images/Elbrus.png" alt="Гора Эльбрус на фоне заката"  class="element__image">    
             <h2 class="element__text">Гора Эльбрус</h2>     
-            <img src="images/like-button.svg" alt="Лайк" class="element__button">  
+            <button class="element__button"><img src="images/like-button.svg" alt="Лайк"></button>
         </div>
         <div class="element">
             <img src="images/Dombai.png" alt="горы в Домбае"  class="element__image">   
             <h2 class="element__text">Домбай</h2> 
-            <img src="images/like-button.svg" alt="Лайк" class="element__button"> 
+            <button class="element__button"><img src="images/like-button.svg" alt="Лайк"></button>
         </div>
         <div class="element">
             <img src="images/Elbrus.png" alt="Гора Эльбрус на фоне заката"  class="element__image">  
             <h2 class="element__text">Гора Эльбрус</h2>  
-            <img src="images/like-button.svg" alt="Лайк" class="element__button"> 
+            <button class="element__button"><img src="images/like-button.svg" alt="Лайк"></button>
         </div>
         <div class="element">
             <img src="images/Dombai.png" alt="горы в Домбае"  class="element__image">     
             <h2 class="element__text">Домбай</h2>
-            <img src="images/like-button.svg" alt="Лайк" class="element__button"> 
+            <button class="element__button"><img src="images/like-button.svg" alt="Лайк"></button>
         </div>
         <div class="element">
             <img src="images/Karachaevsk.jpg" alt="Особняк на холме"  class="element__image">    
             <h2 class="element__text">Карачаево-Черкесия</h2>
-            <img src="images/like-button.svg" alt="Лайк" class="element__button"> 
+            <button class="element__button"><img src="images/like-button.svg" alt="Лайк"></button>
         </div> 
     </section>
     <section class="pop-up pop-upHide">
-        <img src="images/Close-Icon.svg" alt="" class="pop-up__close-button">
+        <button class="pop-up__close-button"> <img src="images/Close-Icon.svg" alt=""></button>
         <div class="form">
-            <h1 class="form__title">Редактировать профиль</h1>
+            <h3 class="form__title">Редактировать профиль</h3>
+            <form class="form__field">
                 <input type="text" class="form__profile form__login">
                 <input type="text" class="form__profile form__password"> 
-                <div class="form__save-button"> 
-                    <h1 class="form__saveButtonText">Сохранить</h1>
-                </div>
+            </form>
+            <button class="form__save-button"><h1 class="form__saveButtonText">Сохранить</h1></button>
         </div>
     </section>
     </main>
     <footer class="footer">
         <p class="footer__text">© 2020 Mesto Russia</p>
     </footer>
-    <script src="script.js"></script>
+    <script src="scripts/script.js"></script>
 </body>
 </html>

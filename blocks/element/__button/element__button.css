@@ -2,6 +2,8 @@
     grid-area: button;
     justify-self: center;
     align-self: center;
+    background-color: white;
+    border: none;
 }
 .element__button:hover{
     opacity: 0.5;

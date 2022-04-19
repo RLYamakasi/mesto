@@ -3,7 +3,10 @@
     justify-self: flex-end;
     cursor: pointer;
     grid-area: add-button;
-    width: 100%;
+    width: 150px;
+    height: 50px;
+    border:2px solid #FFFFFF;
+    background-color: black;
 }
 .profile__add-button:hover{
     opacity: 0.6;
@@ -11,7 +14,7 @@
 
 @media screen and (max-width: 767px) {
     .profile__add-button{
-        max-width: 282px;
+        width: 90%;
         margin: 0 auto;
     }
 }
