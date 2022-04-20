@@ -1,8 +1,8 @@
 .profile{
     display: grid;
     grid-template-areas: 
-    "avatar info . add-button";
-    grid-template-columns: 1fr 4fr 2fr 2fr;
+    "avatar info add-button";
+    grid-template-columns: 1fr 4fr 2fr;
     width: 80%;
     margin: 40px auto 0;
 }

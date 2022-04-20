@@ -4,10 +4,10 @@ let popUp = main.querySelector('.pop-up');
 let popCloseButton = main.querySelector('.pop-up__close-button');
 let popEdit = main.querySelector('.profileInfo__button');
 function popClose(){
-    popUp.classList.add('pop-upHide');
+    popUp.classList.add('pop-up_hide');
 }
 function popOpen(){
-    popUp.classList.remove('pop-upHide');
+    popUp.classList.remove('pop-up_hide');
 }
 popCloseButton.addEventListener('click', popClose);
 popEdit.addEventListener('click', popOpen);
@@ -26,7 +26,7 @@ function formSubmitHandler (evt) {
                               
     name.textContent = nameInput.value;
     job.textContent = jobInput.value;
-    popUp.classList.add('pop-upHide');
+    popUp.classList.add('pop-up_hide');
 }
 
 saveButton.addEventListener('click', formSubmitHandler); 

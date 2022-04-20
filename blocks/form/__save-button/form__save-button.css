@@ -10,6 +10,10 @@
     align-items: center;
     border: none;
     border-radius: 2px;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 1.1em;
+    line-height: 22px;
 }
 .form__save-button:hover{
     background-color: rgba(0,0,0, 0.8);
