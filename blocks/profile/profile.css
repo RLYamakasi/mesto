@@ -3,7 +3,7 @@
     grid-template-areas: 
     "avatar info add-button";
     grid-template-columns: 120px 4fr 2fr;
-    width: 80%;
+    width: 100%;
     margin: 40px auto 0;
 }
 
@@ -16,6 +16,6 @@
         "avatar"
          "info" 
          "add-button";
-         width: 95%;
+         width: 90%;
     }
 }

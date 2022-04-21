@@ -1,7 +1,7 @@
 .elements{
     margin: 75px auto 0;
     gap: 17px;
-    width: 80%;
+    width:100%;
     display: grid;
     grid-template-columns: repeat(3,1fr);
     color: black;
