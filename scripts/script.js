@@ -1,21 +1,21 @@
 //Скрипт для открытия и закрытия pop-up
 let main = document.querySelector('#main');
-let popUp = document.querySelector('.pop-up__vision_hide');
+let popUp = document.querySelector('.pop-up');
 let popCloseButton = popUp.querySelector('.pop-up__closeButton');
 let popEdit = main.querySelector('.profile__button');
 
 function popClose(){
-    console.log('Событие отправки формы')
-    popUp.className = 'pop-up__vision_hide';
+    popUp.classList.add('pop-up');
+    popUp.classList.remove('pop-up__vision_showed');
 }
 
 function popOpen(){
-    console.log('Событие отправки формы')
     let name = main.querySelector('.profile__title');
     let job = main.querySelector('.profile__subtitle');
     nameInput.value = name.textContent;
     jobInput.value = job.textContent;
-    popUp.className = 'pop-up';
+    popUp.classList.add('pop-up__vision_showed');
+    popUp.classList.remove('pop-up');
 }
 
 let formElement = popUp.querySelector('.form__field'); 
@@ -26,7 +26,6 @@ let saveButton = popUp.querySelector('.form__save-button');
 
 function formSubmitHandler (evt) {
     evt.preventDefault();
-    console.log('Событие отправки формы')
     let name = main.querySelector('.profile__title');
     let job = main.querySelector('.profile__subtitle');                          
     name.textContent = nameInput.value;
