@@ -1,35 +1,41 @@
 //Скрипт для открытия и закрытия pop-up
 let main = document.querySelector('#main');
-let popUp = main.querySelector('.pop-up');
-let popCloseButton = main.querySelector('.pop-up__close-button');
-let popEdit = main.querySelector('.profileInfo__button');
+let popUp = document.querySelector('.pop-up_hide');
+let popCloseButton = popUp.querySelector('.pop-up__close-button');
+let popEdit = main.querySelector('.profile__button');
+
 function popClose(){
-    popUp.classList.add('pop-up_hide');
+    console.log('Событие отправки формы')
+    popUp.className = 'pop-up_hide';
 }
+
 function popOpen(){
-    popUp.classList.remove('pop-up_hide');
+    console.log('Событие отправки формы')
+    let name = main.querySelector('.profile__title');
+    let job = main.querySelector('.profile__subtitle');
+    nameInput.value = name.textContent;
+    jobInput.value = job.textContent;
+    popUp.className = 'pop-up';
 }
-popCloseButton.addEventListener('click', popClose);
-popEdit.addEventListener('click', popOpen);
 
-
-let formElement = main.querySelector('.form'); 
-let nameInput = formElement.querySelector('.form__login'); 
-let jobInput = formElement.querySelector('.form__password');
-let saveButton = main.querySelector('.form__save-button'); 
+let formElement = popUp.querySelector('.form__field'); 
+let nameInput = document.getElementById('name'); 
+let jobInput = document.getElementById('job');
+let saveButton = popUp.querySelector('.form__save-button'); 
 
 
 function formSubmitHandler (evt) {
     evt.preventDefault();
-    let name = main.querySelector('.profileInfo__title');
-    let job = main.querySelector('.profileInfo__subtitle');
-                              
+    console.log('Событие отправки формы')
+    let name = main.querySelector('.profile__title');
+    let job = main.querySelector('.profile__subtitle');                          
     name.textContent = nameInput.value;
     job.textContent = jobInput.value;
-    popUp.classList.add('pop-up_hide');
+    popClose;
 }
-
-saveButton.addEventListener('click', formSubmitHandler); 
+popCloseButton.addEventListener("click", popClose);
+popEdit.addEventListener("click", popOpen);
+saveButton.addEventListener("click", formSubmitHandler); 
 
 
 

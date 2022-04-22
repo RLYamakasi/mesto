@@ -6,7 +6,7 @@
     width: 150px;
     height: 50px;
     border:2px solid #FFFFFF;
-    background-color: black;
+    background: none;
 }
 .profile__add-button:hover{
     opacity: 0.6;

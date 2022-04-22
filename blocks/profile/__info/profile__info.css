@@ -1,4 +1,4 @@
-.profileInfo{
+.profile__info{
     grid-area: info;
     display: grid;
     grid-template-columns: 3fr 1fr;
@@ -10,7 +10,7 @@
 
 }
 @media screen and (max-width: 767px) {
-    .profileInfo{
+    .profile__info{
         grid-template-columns: 5fr 1fr;
         text-align: center;
         justify-self: center;
