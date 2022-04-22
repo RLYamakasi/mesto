@@ -31,11 +31,11 @@ function formSubmitHandler (evt) {
     let job = main.querySelector('.profile__subtitle');                          
     name.textContent = nameInput.value;
     job.textContent = jobInput.value;
-    popClose;
+    popClose();
 }
 popCloseButton.addEventListener("click", popClose);
 popEdit.addEventListener("click", popOpen);
-saveButton.addEventListener("click", formSubmitHandler); 
+formElement.addEventListener("submit", formSubmitHandler); 
 
 
 

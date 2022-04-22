@@ -1,4 +1,5 @@
 .profile__button{
+    display: flex;
     grid-area: edit-button;
     width: 24px;
     height: 24px;
@@ -15,5 +16,6 @@
 @media screen and (max-width:767px) {
     .profile__button{
         justify-self: center;
+        
     }
 }
