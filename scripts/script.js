@@ -1,12 +1,12 @@
 //Скрипт для открытия и закрытия pop-up
 let main = document.querySelector('#main');
-let popUp = document.querySelector('.pop-up_hide');
-let popCloseButton = popUp.querySelector('.pop-up__close-button');
+let popUp = document.querySelector('.pop-up__vision_hide');
+let popCloseButton = popUp.querySelector('.pop-up__closeButton');
 let popEdit = main.querySelector('.profile__button');
 
 function popClose(){
     console.log('Событие отправки формы')
-    popUp.className = 'pop-up_hide';
+    popUp.className = 'pop-up__vision_hide';
 }
 
 function popOpen(){

@@ -20,8 +20,8 @@
 @import url(../blocks/footer/footer.css);
 @import url(../blocks/footer/__text/footer__text.css);
 @import url(../blocks/pop-up/pop-up.css);
-@import url(../blocks/pop-up/__close-button/pop-up__close-button.css);
-@import url(../blocks/pop-up/_hide/pop-up_hide.css);
+@import url(../blocks/pop-up/__closeButton/pop-up__closeButton.css);
+@import url(../blocks/pop-up/__vision/_hide/pop-up__vision_hide.css);
 @import url(../blocks/form/form.css);
 @import url(../blocks/form/__profile/form__profile.css);
 @import url(../blocks/form/__title/form__title.css);
