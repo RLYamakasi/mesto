@@ -1,15 +1,21 @@
 .elements{
     margin: 75px auto 0;
     gap: 17px;
-    width:100%;
+    max-width: 880px;
     display: grid;
     grid-template-columns: repeat(3,1fr);
     color: black;
 }
 
+@media screen and (max-width:1200px){
+    .elements{
+        max-width: 90%; 
+    }
+}
+
 @media screen and (max-width:767px){
     .elements{
-        width: 90%;
+        margin: 36px auto 0;
         grid-template-columns: 1fr;
     }
 }

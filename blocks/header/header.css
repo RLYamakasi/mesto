@@ -1,13 +1,29 @@
 .header{
-    position: relative;
-    width: 100%;
+    max-width: 880px;
     margin: 45px auto 0;
     border-bottom: 1px solid rgba(84, 84, 84, 0.7);
+    
 }
 
-@media screen and (max-width:767px){
+
+@media screen and (max-width:1200px){
     .header{
-        width: 90%;
-        
+        max-width: 90%; 
+        margin: 28px auto 0;
     }
+}
+
+@media screen and (max-width:320px){
+    .header{
+        border-bottom: none;
+    }
+    .header::before {
+        content: "";
+        border-bottom: 1px solid rgba(84, 84, 84, 0.7);
+        position: absolute;
+        left: 0;
+        right: 0;
+        width: 100%;
+        top: 62px; 
+      }
 }

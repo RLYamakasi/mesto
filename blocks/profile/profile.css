@@ -3,10 +3,16 @@
     grid-template-areas: 
     "avatar info add-button";
     grid-template-columns: 120px 4fr 2fr;
-    width: 100%;
+    max-width: 880px;
     margin: 40px auto 0;
 }
 
+
+@media screen and (max-width:1200px){
+    .profile{
+        max-width: 90%; 
+    }
+}
 @media screen and (max-width: 767px) {
     .profile{
         gap:30px;
@@ -16,6 +22,5 @@
         "avatar"
          "info" 
          "add-button";
-         width: 90%;
     }
 }

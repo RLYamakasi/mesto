@@ -17,10 +17,12 @@
 @import url(../blocks/element/__button/element__button.css);
 @import url(../blocks/element/__button/_active/element__button_active.css);
 @import url(../blocks/profile/__add-button/profile__add-button.css);
+@import url(../blocks/profile/__add-buttonImg/profile__add-buttonImg.css);
 @import url(../blocks/footer/footer.css);
 @import url(../blocks/footer/__text/footer__text.css);
 @import url(../blocks/pop-up/pop-up.css);
 @import url(../blocks/pop-up/__closeButton/pop-up__closeButton.css);
+@import url(../blocks/pop-up/__closeButtonImg/pop-up__closeButtonImg.css);
 @import url(../blocks/pop-up/__vision/_showed/pop-up__vision_showed.css);
 @import url(../blocks/form/form.css);
 @import url(../blocks/form/__profile/form__profile.css);
