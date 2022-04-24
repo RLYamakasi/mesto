@@ -6,8 +6,11 @@
     background-color: transparent;
     color: inherit;
     outline: none;
-    margin-bottom: 30px;
+    margin-bottom: 43px;
     font-weight: 400;
-    font-size: 0.8em;
+    font-size: 0.875em;
     line-height: 17px;
+}
+.form__profile:last-of-type{
+    margin-bottom: 43px;
 }

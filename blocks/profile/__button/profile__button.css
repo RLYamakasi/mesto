@@ -3,8 +3,10 @@
     grid-area: edit-button;
     width: 24px;
     height: 24px;
-    justify-self: flex-start;
+    justify-self: flex-end;
     align-self: center;
+    justify-content: center;
+    align-items: center;
     cursor:pointer;
     border:1px solid #FFFFFF;
     background: none;
@@ -15,7 +17,9 @@
 }
 @media screen and (max-width:767px) {
     .profile__button{
+        width: 18px;
+        height: 18px;
         justify-self: center;
-        
+        align-self: flex-start;
     }
 }

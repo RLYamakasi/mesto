@@ -3,34 +3,37 @@ let main = document.querySelector('#main');
 let popUp = document.querySelector('.pop-up');
 let popCloseButton = popUp.querySelector('.pop-up__closeButton');
 let popEdit = main.querySelector('.profile__button');
-
-function popClose(){
-    popUp.classList.add('pop-up');
-    popUp.classList.remove('pop-up__vision_showed');
-}
-
-function popOpen(){
-    let name = main.querySelector('.profile__title');
-    let job = main.querySelector('.profile__subtitle');
-    nameInput.value = name.textContent;
-    jobInput.value = job.textContent;
-    popUp.classList.add('pop-up__vision_showed');
-    popUp.classList.remove('pop-up');
-}
-
 let formElement = popUp.querySelector('.form__field'); 
 let nameInput = document.getElementById('name'); 
 let jobInput = document.getElementById('job');
-let saveButton = popUp.querySelector('.form__save-button'); 
+let name = main.querySelector('.profile__title');
+let job = main.querySelector('.profile__subtitle');
 
+//чтобы при открытии pop-up, выставлялось имя
+function setNameAndJob(name, job){   
+    nameInput.value = name.textContent;
+    jobInput.value = job.textContent;
+}
 
-function formSubmitHandler (evt) {
-    evt.preventDefault();
-    let name = main.querySelector('.profile__title');
-    let job = main.querySelector('.profile__subtitle');                          
+//тоже самое, только при сохранении и работает немного иначе
+function reveseSetNameAndJob(name, job){   
     name.textContent = nameInput.value;
     job.textContent = jobInput.value;
-    popClose();
+}
+
+function popClose(){
+    popUp.classList.add('pop-up_hiden');
+}
+
+function popOpen(){
+    popUp.classList.remove('pop-up_hiden');
+    setNameAndJob(name, job);
+}
+
+function formSubmitHandler(evt) {
+    evt.preventDefault();                           
+    reveseSetNameAndJob(name, job)
+    popClose(); 
 }
 popCloseButton.addEventListener("click", popClose);
 popEdit.addEventListener("click", popOpen);

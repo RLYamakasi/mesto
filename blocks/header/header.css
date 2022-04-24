@@ -15,15 +15,6 @@
 
 @media screen and (max-width:320px){
     .header{
-        border-bottom: none;
+        max-width: 100%;
     }
-    .header::before {
-        content: "";
-        border-bottom: 1px solid rgba(84, 84, 84, 0.7);
-        position: absolute;
-        left: 0;
-        right: 0;
-        width: 100%;
-        top: 62px; 
-      }
 }

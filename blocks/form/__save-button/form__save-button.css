@@ -1,6 +1,6 @@
 .form__save-button{
     cursor:pointer;
-    margin: 18px 0 48px;
+    margin-bottom: 37px;
     background-color: black;
     color: white;
     max-width: 358px;
@@ -22,11 +22,12 @@
 
 @media screen and (max-width:767px){
     .form__save-button{
-        max-width: 238px;
+        align-self: center;
+        width: 238px;
         height: 46px;
         margin-bottom: 29px;
         font-weight: 400;
-        font-size: 0.8em;
+        font-size: 0.875em;
         line-height: 17px;
     }
 }

@@ -15,9 +15,7 @@
 }
 @media screen and (max-width: 767px) {
     .profile{
-        gap:30px;
         grid-template-columns: 100%;
-        grid-template-rows: 1fr 0.5fr 0.5fr;
         grid-template-areas: 
         "avatar"
          "info" 
