@@ -22,11 +22,11 @@ function reveseSetNameAndJob(name, job){
 }
 
 function popClose(){
-    popUp.classList.add('pop-up_hiden');
+    popUp.classList.remove('pop-up_unHiden');
 }
 
 function popOpen(){
-    popUp.classList.remove('pop-up_hiden');
+    popUp.classList.add('pop-up_unHiden');
     setNameAndJob(name, job);
 }
 

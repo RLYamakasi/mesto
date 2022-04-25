@@ -14,7 +14,7 @@
         "title  edit-button"
         "subtitle  subtitle";
         width: 282px;
-        margin: 26px auto 0;
+        margin: 26px auto 36px;
         grid-template-columns: 8fr 2fr;
         text-align: center;
         justify-self: center;

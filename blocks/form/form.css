@@ -1,4 +1,5 @@
 .form{
+    position: relative;
     color: black;
     display: flex;
     flex-direction: column;

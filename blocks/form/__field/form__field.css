@@ -1,6 +1,12 @@
 .form__field{
     display: flex;
     flex-direction: column;
-    width: 80%;
+    width: 358px;
     justify-content: space-between;
+}
+
+@media screen and (max-width:767px) {
+    .form__field{
+        width: 238px;
+    }
 }

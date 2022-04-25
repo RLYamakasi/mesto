@@ -1,8 +1,8 @@
 .pop-up__closeButton{
     cursor:pointer;
     position: absolute;
-    right: 30vw;
-    top:20%;
+    right: -12.5%;
+    top: -12.5%;
     background:none;
     border: none;
     
@@ -14,7 +14,7 @@
     .pop-up__closeButton{
         width: 20px;
         height: 20px;
-        right: 19px;
-        top: 18vh;
+        right: 3%;
+        top: -10%;
     }
 }
