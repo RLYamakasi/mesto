@@ -3,7 +3,7 @@
 никаких системных требований.
 планируется добавить систему постов и лайков.
 
-Ссылка на GitHub Pages: [github.io]:https://rlyamakasi.github.io/mesto/
+Ссылка на GitHub Pages: https://rlyamakasi.github.io/mesto/
 
 Инструкция по использованию:
 1.Открыть страничку
