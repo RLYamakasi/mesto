@@ -17,7 +17,7 @@
             <div class="profile__info">
                 <h1 class="profile__title">Жак-Ив Кусто</h1>
                 <p class="profile__subtitle">Исследователь океана</p>
-                <button class="profile__button" type="button">
+                <button class="profile__button" type="button">  
                     <img src="images/edit-button.svg" alt="кнопка редактировать" class="profile__buttonImg">
                 </button>
             </div>
@@ -29,60 +29,85 @@
        <div class="element">
             <img src="images/Karachaevsk.jpg" alt="Особняк на холме" class="element__image">   
             <h2 class="element__text">Карачаевск</h2>  
-            <button class="element__button" type="button">
-                <img src="images/like-button.svg" alt="Лайк">
-            </button>
+            <button class="element__button" type="button"></button>
+            <button class="element__bin"></button>
         </div>
         <div class="element">
             <img src="images/Elbrus.png" alt="Гора Эльбрус на фоне заката"  class="element__image">    
             <h2 class="element__text">Гора Эльбрус</h2>     
-            <button class="element__button" type="button">
-                <img src="images/like-button.svg" alt="Лайк">
-            </button>
+            <button class="element__button" type="button"></button>
+            <button class="element__bin"></button>
         </div>
         <div class="element">
             <img src="images/Dombai.png" alt="горы в Домбае"  class="element__image">   
             <h2 class="element__text">Домбай</h2> 
-            <button class="element__button" type="button">
-                <img src="images/like-button.svg" alt="Лайк">
-            </button>
+            <button class="element__button" type="button"></button>
+            <button class="element__bin"></button>
         </div>
         <div class="element">
             <img src="images/Elbrus.png" alt="Гора Эльбрус на фоне заката"  class="element__image">  
             <h2 class="element__text">Гора Эльбрус</h2>  
-            <button class="element__button" type="button">
-                <img src="images/like-button.svg" alt="Лайк">
-            </button>
+            <button class="element__button" type="button"></button>
+            <button class="element__bin"></button>
         </div>
         <div class="element">
             <img src="images/Dombai.png" alt="горы в Домбае"  class="element__image">     
             <h2 class="element__text">Домбай</h2>
-            <button class="element__button" type="button">
-                <img src="images/like-button.svg" alt="Лайк">
-            </button>
+            <button class="element__button" type="button"></button>
+            <button class="element__bin"></button>
         </div>
         <div class="element">
             <img src="images/Karachaevsk.jpg" alt="Особняк на холме"  class="element__image">    
             <h2 class="element__text">Карачаево-Черкесия</h2>
-            <button class="element__button" type="button">
-                <img src="images/like-button.svg" alt="Лайк">
-            </button>
-        </div> 
+            <button class="element__button" type="button"></button>
+            <button class="element__bin"></button>
+        </div>
     </section>
-    <section class="pop-up">
+    <section class="pop-up pop-up_type_edit" id="popEdit">
         <div class="form">
             <button class="pop-up__closeButton" type="button">
                 <img src="images/Close-Icon.svg" alt="кнопка закрыть" class="pop-up__closeButtonImg">
             </button>
             <h3 class="form__title">Редактировать профиль</h3>
-            <form class="form__field" name="place">
-                <input type="text" class="form__profile" id="name" name="name">
-                <input type="text" class="form__profile" id="job" name="job"> 
+            <form class="form__field form__save-button_type_edit" id="edit">
+                <input type="text" class="form__profile" id="name" placeholder="Имя">
+                <input type="text" class="form__profile" id="job" placeholder="Работа"> 
+                <button class="form__save-button" type="submit">Сохранить</button>
+            </form>         
+        </div>
+    </section>
+    <section class="pop-up pop-up_type_add" id="popAdd">
+        <div class="form">
+            <button class="pop-up__closeButton" type="button">
+                <img src="images/Close-Icon.svg" alt="кнопка закрыть" class="pop-up__closeButtonImg">
+            </button>
+            <h3 class="form__title">Новое место</h3>
+            <form class="form__field form__save-button_type_add" id="add">
+                <input type="text" class="form__profile" id="place" placeholder="Название">
+                <input type="text" class="form__profile" id="source" placeholder="Ссылка на картинку"> 
                 <button class="form__save-button" type="submit">Сохранить</button>
             </form>         
         </div>
     </section>
     </main>
+    <template id="blockTemplate">
+        <div class="element">
+            <img src="images/Karachaevsk.jpg" class="element__image">    
+            <h2 class="element__text"></h2>
+            <button class="element__button" type="button"></button>
+            <button class="element__bin"></button>
+        </div>
+    </template>
+    <template id="imageTemplate">
+        <section class="pop-up pop-up_type_image" id="popImg">
+            <div class="pop-up__block">
+                <button class="pop-up__closeButton" type="button">
+                    <img src="images/Close-Icon.svg" alt="кнопка закрыть" class="pop-up__closeButtonImg">
+                </button>
+                <img src="" alt="" class="pop-up__bigImage">
+            </div>        
+        </section>
+    </template>
     <footer class="footer">
         <p class="footer__text">© 2020 Mesto Russia</p>
     </footer>

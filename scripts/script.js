@@ -1,13 +1,49 @@
 //Скрипт для открытия и закрытия pop-up
 let main = document.querySelector('#main');
-let popUp = document.querySelector('.pop-up');
-let popCloseButton = popUp.querySelector('.pop-up__closeButton');
-let popEdit = main.querySelector('.profile__button');
-let formElement = popUp.querySelector('.form__field'); 
-let nameInput = document.getElementById('name'); 
-let jobInput = document.getElementById('job');
-let name = main.querySelector('.profile__title');
-let job = main.querySelector('.profile__subtitle');
+let popUpEdit = document.querySelector('#popEdit');
+let popUpEditButton = main.querySelector('.profile__button');
+let popUpAddButton = document.querySelector('.profile__add-button');
+let popUpAdd = document.querySelector('#popAdd');
+let formEdit = document.querySelector('.form__save-button_type_edit');
+let formAdd = document.querySelector('.form__save-button_type_add');
+let nameInput = document.querySelector('#name'); 
+let jobInput = document.querySelector('#job');
+let placeInput = document.querySelector('#place'); 
+let sourceInput = document.querySelector('#source');
+let name = document.querySelector('.profile__title');
+let job = document.querySelector('.profile__subtitle');
+let blockTemplate = document.querySelector('#blockTemplate').content;
+let imageTemplate = document.querySelector('#imageTemplate').content;
+let elements = document.querySelector('.elements');
+let image = document.querySelectorAll('.element__image');
+let closeButton = document.querySelectorAll('.pop-up__closeButton');
+
+const initialCards = [
+    {
+      name: 'Архыз',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
+    },
+    {
+      name: 'Челябинская область',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
+    },
+    {
+      name: 'Иваново',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
+    },
+    {
+      name: 'Камчатка',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
+    },
+    {
+      name: 'Холмогорский район',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
+    },
+    {
+      name: 'Байкал',
+      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
+    }
+  ]; 
 
 //чтобы при открытии pop-up, выставлялось имя
 function setNameAndJob(name, job){   
@@ -16,62 +52,85 @@ function setNameAndJob(name, job){
 }
 
 //тоже самое, только при сохранении и работает немного иначе
-function reveseSetNameAndJob(name, job){   
+function reveseSetNameAndJob(name, job){
     name.textContent = nameInput.value;
     job.textContent = jobInput.value;
 }
 
-function popClose(){
-    popUp.classList.remove('pop-up_unHiden');
+let popUpClosing = (event) =>{
+  event.target.closest('.pop-up').classList.toggle('pop-up_unHiden');
+  console.log("gfgd");
 }
 
-function popOpen(){
-    popUp.classList.add('pop-up_unHiden');
+let setLike = (event) => {
+  event.target.closest('.element__button').classList.toggle('.element__button_active');
+}
+
+let deleteBlock = (event) => {
+  event.target.closest(".element").remove();
+}
+
+//добавление блока
+function addBlock(text, source){
+    let element = blockTemplate.querySelector('.element').cloneNode(true);
+    element.querySelector('.element__image').src = source.value;
+    element.querySelector('.element__text').textContent = text.value;
+    elements.prepend(element);
+    let bin = document.querySelector('.element__bin');
+    let likes = main.querySelector('.element__button');
+    likes.addEventListener("click", setLike);
+    bin.addEventListener("click", deleteBlock);
+}
+
+function popOpenForEditButton(){
+    popUpEdit.classList.add('pop-up_unHiden');
     setNameAndJob(name, job);
 }
 
-function formSubmitHandler(evt) {
-    evt.preventDefault();                           
-    reveseSetNameAndJob(name, job)
-    popClose(); 
+function popOpenForAddButton(){
+    popUpAdd.classList.add('pop-up_unHiden');
 }
-popCloseButton.addEventListener("click", popClose);
-popEdit.addEventListener("click", popOpen);
-formElement.addEventListener("submit", formSubmitHandler); 
 
+function formEditSave(evt) {
+    evt.preventDefault();                           
+    reveseSetNameAndJob(name, job);
+    popUpClosing();
+}
 
+function formAddSave(evt) {
+    evt.preventDefault();                           
+    addBlock(placeInput, sourceInput);
+    placeInput.value = "";
+    sourceInput.value = "";
+    popUpClosing();
+}
 
+popUpAddButton.addEventListener("click", popOpenForAddButton);
+popUpEditButton.addEventListener("click", popOpenForEditButton);
+formAdd.addEventListener("submit", formAddSave); 
+formEdit.addEventListener("submit", formEditSave); 
 
+image.forEach(function (el){
+  function openImage(){
+    let cloneOfImage = el.src;
+    let element = imageTemplate.querySelector('.pop-up_type_image').cloneNode(true);
+    element.querySelector('.pop-up__bigImage').src = cloneOfImage;
+    elements.after(element);
+    element.classList.add('pop-up_unHiden');
+    let closeButton = document.querySelector('.pop-up__closeButton');
+    closeButton.addEventListener("click", popUpClosing)
+  }
+  el.addEventListener("click", openImage);
+  
+});
 
-
-
-
-
-//на будущее
-
-/**Скрипт для лайков, были проблемы с querySelector, обращался в интернет за помощью, а потом оказалось,что скрипт писать и не нужно,а я потратил на него кучу времени(((((
-let likes = main.querySelector('.element__button');
+//для элементов,которые уже есть на странице
 main.querySelectorAll('.element__button')
   .forEach(el => el.addEventListener('click', () => el.classList.toggle('element__button_active')));
 
-**/
+main.querySelectorAll('.element__bin')
+  .forEach(el => el.addEventListener('click', deleteBlock));
 
-
-/**
- * 
- * Я думал надо делать скрипт по созданию постов,так что как-то так)
- * 
- * let elements = main.querySelector('.elements');
-let addButton = main.querySelector('.profile__add-button');
-
-function addBlock(){
-    elements.insertAdjacentHTML('beforeend', `
-    <div class="element">
-            <img src="images/Karachaevsk.jpg" alt="Особняк на холме" class="element__image">   
-            <h2 class="element__text">Карачаевск</h2>  
-            <img src="images/like button.svg" alt="Лайк" class="element__button">   
-        </div>
-`);
-}
-addButton.addEventListener('click', addBlock);
-**/
+  //для закрытия pop-up, работает на честном слове
+main.querySelectorAll('.pop-up__closeButton')
+  .forEach(el => el.addEventListener('click', popUpClosing));
