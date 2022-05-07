@@ -1,13 +1,3 @@
-<<<<<<< HEAD
-//Скрипт для открытия и закрытия pop-up
-let main = document.querySelector('#main');
-let popUpEdit = document.querySelector('#popEdit');
-let popUpEditButton = main.querySelector('.profile__button');
-let popUpAddButton = document.querySelector('.profile__add-button');
-let popUpAdd = document.querySelector('#popAdd');
-let formEdit = document.querySelector('#edit');
-let formAdd = document.querySelector('#add');
-=======
 const main = document.querySelector('#main');
 const popUpEdit = document.querySelector('.pop-up_type_edit');
 const popUpEditButton = main.querySelector('.profile__button');
@@ -15,7 +5,6 @@ const popUpAddButton = document.querySelector('.profile__add-button');
 const popUpAdd = document.querySelector('.pop-up_type_add');
 const formEdit = document.querySelector('#edit');
 const formAdd = document.querySelector('#add');
->>>>>>> 8aa40fd (5спринт 2 итерация)
 let nameInput = document.querySelector('#name'); 
 let jobInput = document.querySelector('#job');
 let placeInput = document.querySelector('#place'); 
