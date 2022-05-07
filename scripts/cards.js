@@ -27,7 +27,7 @@ const initialCards = [
   
   //это для генерации начальных карточек
   function startBlocks(){
-    for(i=0; i < initialCards.length ; i++){
+    for(i=0; i <= initialCards.length ; i++){
     let element = blockTemplate.querySelector('.element').cloneNode(true);
     let element__img = element.querySelector('.element__image');
     let element__title = element.querySelector(".element__text");
