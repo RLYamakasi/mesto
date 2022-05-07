@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 //Скрипт для открытия и закрытия pop-up
 let main = document.querySelector('#main');
 let popUpEdit = document.querySelector('#popEdit');
@@ -6,44 +7,45 @@ let popUpAddButton = document.querySelector('.profile__add-button');
 let popUpAdd = document.querySelector('#popAdd');
 let formEdit = document.querySelector('#edit');
 let formAdd = document.querySelector('#add');
+=======
+const main = document.querySelector('#main');
+const popUpEdit = document.querySelector('.pop-up_type_edit');
+const popUpEditButton = main.querySelector('.profile__button');
+const popUpAddButton = document.querySelector('.profile__add-button');
+const popUpAdd = document.querySelector('.pop-up_type_add');
+const formEdit = document.querySelector('#edit');
+const formAdd = document.querySelector('#add');
+>>>>>>> 8aa40fd (5спринт 2 итерация)
 let nameInput = document.querySelector('#name'); 
 let jobInput = document.querySelector('#job');
 let placeInput = document.querySelector('#place'); 
 let sourceInput = document.querySelector('#source');
 let name = document.querySelector('.profile__title');
 let job = document.querySelector('.profile__subtitle');
-let blockTemplate = document.querySelector('#blockTemplate').content;
-let imageTemplate = document.querySelector('#imageTemplate').content;
+const blockTemplate = document.querySelector('#blockTemplate').content;
 let elements = document.querySelector('.elements');
 let image = document.querySelectorAll('.element__image');
-let closeButton = document.querySelectorAll('.pop-up__closeButton');
 
-const initialCards = [
-    {
-      name: 'Архыз',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-    },
-    {
-      name: 'Челябинская область',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-    },
-    {
-      name: 'Иваново',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-    },
-    {
-      name: 'Камчатка',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-    },
-    {
-      name: 'Холмогорский район',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-    },
-    {
-      name: 'Байкал',
-      link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-    }
-  ]; 
+const deleteBlock = (event) => { 
+  event.target.closest(".element").remove(); 
+}
+
+const setLike = (event) => { 
+  event.target.classList.toggle('element__button_active');
+}
+
+const openImage = (event) => { 
+  let popUpImg = document.querySelector('.pop-up_type_image');
+  let clone = event.target.closest('.element');
+  let cloneOfImage = event.target.closest('.element__image');
+  let cloneOfText = clone.querySelector('.element__text');
+  let element = document.querySelector('.pop-up_type_image').cloneNode(true);
+  element.querySelector('.pop-up__bigImage').src = cloneOfImage.src;
+  element.querySelector('.pop-up__text').textContent = cloneOfText.textContent;
+  element.querySelector('.pop-up__closeButton').addEventListener('click',closePopup);
+  popUpImg.replaceWith(element);
+  element.classList.add('pop-up_unHiden');
+}
 
 //чтобы при открытии pop-up, выставлялось имя
 function setNameAndJob(name, job){   
@@ -57,80 +59,63 @@ function reveseSetNameAndJob(name, job){
     job.textContent = jobInput.value;
 }
 
-let popUpClosing = (event) =>{
-  event.target.closest('.pop-up').classList.toggle('pop-up_unHiden');
-  console.log("gfgd");
+function openPopup (popup) {
+  popup.classList.add('pop-up_unHiden');
+  main.querySelectorAll('.pop-up__closeButton')
+      .forEach(el => el.addEventListener('click', closePopup));
 }
 
-let setLike = (event) => {
-  event.target.closest('.element__button').classList.toggle('.element__button_active');
+function closePopup() {
+  main.querySelectorAll('.pop-up')
+  .forEach(el => el.classList.remove('pop-up_unHiden'));
 }
 
-let deleteBlock = (event) => {
-  event.target.closest(".element").remove();
+//для создания блока
+function formAddSave(evt) {
+  evt.preventDefault();       
+  makeBlock(placeInput,sourceInput);                      
+  placeInput.value = ""; //эти две строчки,чтобы обнулить поля,после ввода
+  sourceInput.value = "";
+}
+
+//создание блока
+function makeBlock(place, source){
+    let element = blockTemplate.querySelector('.element').cloneNode(true);
+    let element__img = element.querySelector('.element__image');
+    let element__title = element.querySelector(".element__text");
+    element__img.src = source.value;
+    element__title.textContent = place.value;
+    addBlock(element);  
 }
 
 //добавление блока
-function addBlock(text, source){
-    let element = blockTemplate.querySelector('.element').cloneNode(true);
-    element.querySelector('.element__image').src = source.value;
-    element.querySelector('.element__text').textContent = text.value;
-    elements.prepend(element);
-    let bin = document.querySelector('.element__bin');
-    let likes = main.querySelector('.element__button');
-    likes.addEventListener("click", setLike);
-    bin.addEventListener("click", deleteBlock);
+function addBlock(element){
+  elements.prepend(element);
+  main.querySelectorAll('.element__bin')
+      .forEach(el => el.addEventListener('click', deleteBlock));
+  main.querySelectorAll('.element__button')
+      .forEach(el => el.addEventListener('click', setLike));
+  main.querySelectorAll('.element__image')
+      .forEach(el => el.addEventListener('click', openImage));
+  closePopup();
 }
 
 function popOpenForEditButton(){
-    popUpEdit.classList.add('pop-up_unHiden');
+    openPopup(popUpEdit);
     setNameAndJob(name, job);
 }
 
 function popOpenForAddButton(){
-    popUpAdd.classList.add('pop-up_unHiden');
+    openPopup(popUpAdd);
 }
 
 function formEditSave(evt) {
     evt.preventDefault();                           
     reveseSetNameAndJob(name, job);
-    popUpClosing();
-}
-
-function formAddSave(evt) {
-    evt.preventDefault();                           
-    addBlock(placeInput, sourceInput);
-    placeInput.value = "";
-    sourceInput.value = "";
-    popUpClosing();
+    closePopup();
 }
 
 popUpAddButton.addEventListener("click", popOpenForAddButton);
 popUpEditButton.addEventListener("click", popOpenForEditButton);
 formAdd.addEventListener("submit", formAddSave); 
 formEdit.addEventListener("submit", formEditSave); 
-
-image.forEach(function (el){
-  function openImage(){
-    let cloneOfImage = el.src;
-    let element = imageTemplate.querySelector('.pop-up_type_image').cloneNode(true);
-    element.querySelector('.pop-up__bigImage').src = cloneOfImage;
-    elements.after(element);
-    element.classList.add('pop-up_unHiden');
-    let closeButton = document.querySelector('.pop-up__closeButton');
-    closeButton.addEventListener("click", popUpClosing)
-  }
-  el.addEventListener("click", openImage);
-  
-});
-
-//для элементов,которые уже есть на странице
-main.querySelectorAll('.element__button')
-  .forEach(el => el.addEventListener('click', () => el.classList.toggle('element__button_active')));
-
-main.querySelectorAll('.element__bin')
-  .forEach(el => el.addEventListener('click', deleteBlock));
-
-  //для закрытия pop-up, работает на честном слове
-main.querySelectorAll('.pop-up__closeButton')
-  .forEach(el => el.addEventListener('click', popUpClosing));
