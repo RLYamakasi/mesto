@@ -1,6 +1,13 @@
 .pop-up__block{
+    margin: 10vh auto;
     position: relative;
     width: 75vw;
     height: 75vh;
-    margin: 5% auto 0;
+}
+
+@media screen and (max-width:767px){
+    .pop-up__block{
+        margin: 25vh auto;
+        height: 50vh;
+    }
 }
