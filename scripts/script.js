@@ -33,10 +33,6 @@ const setLike = (event) => {
   event.target.classList.toggle('element__button_active');
 }
 
-const closePopup = (event) => { 
-  event.target.closest(".pop-up").classList.toggle('pop-up_unHiden');
-}
-
 const openImage = (name, link) => {
   popBigImage.src = link;
   popText.textContent = name;
@@ -61,10 +57,10 @@ function openPopup(popup) {
   popup.classList.add('pop-up_unHiden');
 }
 
-//function closePopup(popup) {
-//  popup.classList.remove('pop-up_unHiden');
-//  console.log(popup)
-//}
+function closePopup(popup) {
+  popup.classList.remove('pop-up_unHiden');
+  console.log(popup)
+}
 
 //для создания блока
 function formAddSave(evt) {
@@ -77,16 +73,15 @@ function formAddSave(evt) {
 //создание блока
 function makeBlock(place, source){
     const element = blockTemplate.querySelector('.element').cloneNode(true);
-    const element__img = element.querySelector('.element__image');
-    const element__title = element.querySelector(".element__text");
-    element__img.src = source;
-    element__title.textContent = place; 
-    main.querySelectorAll('.element__bin')
-    .forEach(el => el.addEventListener('click', deleteBlock));
-    main.querySelectorAll('.element__button')
-    .forEach(el => el.addEventListener('click', setLike));
-    element__img.addEventListener('click', () =>  openImage(place, source))
-    elements.prepend(element) // elements.prepend(makeBlock(placeInput.value, sourceInput.value)) не работает
+    const elementImg = element.querySelector('.element__image');
+    const elementTitle = element.querySelector(".element__text");
+    elementImg.src = source;
+    elementImg.alt = place;
+    elementTitle.textContent = place; 
+    element.querySelector('.element__bin').addEventListener('click', deleteBlock);
+    element.querySelector('.element__button').addEventListener('click', setLike);
+    elementImg.addEventListener('click', () =>  openImage(place, source))
+    return element // elements.prepend(makeBlock(placeInput.value, sourceInput.value)) не работает
 }
 
 function popOpenForEditButton(){
@@ -109,13 +104,19 @@ popUpEditButton.addEventListener("click", popOpenForEditButton);
 formAdd.addEventListener("submit", formAddSave); 
 formEdit.addEventListener("submit", formEditSave); 
 
-main.querySelectorAll('.pop-up__closeButton')
-    .forEach(el => el.addEventListener('click', closePopup));
+main.querySelectorAll('.pop-up').forEach((popup) => {
+  popup.addEventListener('click', (e) => {
+    console.log(e.target)
+    if (e.target.classList.contains('pop-up__closeButtonImg')) { 
+      closePopup(popup)
+    }
+  })
+})
 
 //это для генерации начальных карточек
 function startBlocks(){
   for(i = 0; i < initialCards.length; i++){ 
-    makeBlock(initialCards[i].name, initialCards[i].link)
+    elements.prepend(makeBlock(initialCards[i].name, initialCards[i].link))
   }  
 }
 
