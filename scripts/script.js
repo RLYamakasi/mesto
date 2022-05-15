@@ -22,8 +22,13 @@ const popText = document.querySelector('.pop-up__text');
 //const closeButtonAdd = document.querySelector('.closeButton_add');
 //const closeButtonImage = document.querySelector('.closeButton_image');
 
+const heandleClosePopup = (evt) => { //для закрытия с помощью мыши и кнопки esc
+  const openedPopup = document.querySelector('.pop-up_unHiden');
 
-
+  if ((openedPopup && evt.key === 'Escape') || evt.target === openedPopup) {
+    closePopup(openedPopup);
+  }
+};
 
 const deleteBlock = (event) => { 
   event.target.closest(".element").remove(); 
@@ -55,19 +60,22 @@ function reveseSetNameAndJob(name, job){
 
 function openPopup(popup) {
   popup.classList.add('pop-up_unHiden');
+  document.addEventListener('keydown', heandleClosePopup);
+  document.addEventListener('click', heandleClosePopup);
 }
 
 function closePopup(popup) {
   popup.classList.remove('pop-up_unHiden');
-  console.log(popup)
 }
 
 //для создания блока
 function formAddSave(evt) {
-  evt.preventDefault();     
-  makeBlock(placeInput.value, sourceInput.value)                    
+
+  evt.preventDefault();    
+  elements.prepend(makeBlock(placeInput.value, sourceInput.value));                    
   placeInput.value = ""; //эти две строчки,чтобы обнулить поля,после ввода
   sourceInput.value = "";
+  closePopup(popUpAdd);
 }
 
 //создание блока
@@ -81,32 +89,35 @@ function makeBlock(place, source){
     element.querySelector('.element__bin').addEventListener('click', deleteBlock);
     element.querySelector('.element__button').addEventListener('click', setLike);
     elementImg.addEventListener('click', () =>  openImage(place, source))
-    return element // elements.prepend(makeBlock(placeInput.value, sourceInput.value)) не работает
+    return element 
 }
+
 
 function popOpenForEditButton(){
     openPopup(popUpEdit);
     setNameAndJob(name, job);
-    
+    validation();
 }
 
 function popOpenForAddButton(){
     openPopup(popUpAdd);
+    validation();
 }
 
 function formEditSave(evt) {
     evt.preventDefault();                           
     reveseSetNameAndJob(name, job);
+    closePopup(popUpEdit)
 }
 
 popUpAddButton.addEventListener("click", popOpenForAddButton);
 popUpEditButton.addEventListener("click", popOpenForEditButton);
 formAdd.addEventListener("submit", formAddSave); 
-formEdit.addEventListener("submit", formEditSave); 
+formEdit.addEventListener("submit", formEditSave);
+
 
 main.querySelectorAll('.pop-up').forEach((popup) => {
   popup.addEventListener('click', (e) => {
-    console.log(e.target)
     if (e.target.classList.contains('pop-up__closeButtonImg')) { 
       closePopup(popup)
     }

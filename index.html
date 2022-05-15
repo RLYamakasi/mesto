@@ -34,8 +34,14 @@
             </button>
             <h3 class="form__title">Редактировать профиль</h3>
             <form class="form__field" id="edit">
-                <input type="text" class="form__profile" id="name" placeholder="Имя">
-                <input type="text" class="form__profile" id="job" placeholder="Работа"> 
+                <label class="form__label">
+                    <input type="text" class="form__profile" id="name" placeholder="Имя" minlength="2" maxlength="40" required>
+                    <span id="name-error" class="form__error">скрытый текст</span>
+                </label>
+                <label class="form__label">
+                    <input type="text" class="form__profile" id="job" placeholder="Работа" minlength="2" maxlength="200" required>
+                    <span id="job-error" class="form__error">скрытый текст</span>
+                </label>
                 <button class="form__save-button" type="submit">Сохранить</button>
             </form>         
         </div>
@@ -47,8 +53,14 @@
             </button>
             <h3 class="form__title">Новое место</h3>
             <form class="form__field" id="add">
-                <input type="text" class="form__profile" id="place" placeholder="Название">
-                <input type="text" class="form__profile" id="source" placeholder="Ссылка на картинку"> 
+                <label class="form__label">
+                    <input type="text" class="form__profile" id="place" placeholder="Название" minlength="2" maxlength="30" required>
+                    <span id="place-error" class="form__error">скрытый текст</span>
+                </label>
+                <label class="form__label">
+                    <input type="url" class="form__profile" id="source" placeholder="Ссылка на картинку" required>
+                    <span id="source-error"class="form__error">скрытый текст</span>
+                </label>
                 <button class="form__save-button" type="submit">Сохранить</button>
             </form>         
         </div>
@@ -75,6 +87,7 @@
         <p class="footer__text">© 2020 Mesto Russia</p>
     </footer>
     <script src="scripts/cards.js"></script>
+    <script src="scripts/validate.js"></script>
     <script src="scripts/script.js"></script>
 </body>
 </html>
