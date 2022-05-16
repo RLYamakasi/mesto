@@ -22,10 +22,16 @@ const popText = document.querySelector('.pop-up__text');
 //const closeButtonAdd = document.querySelector('.closeButton_add');
 //const closeButtonImage = document.querySelector('.closeButton_image');
 
-const heandleClosePopup = (evt) => { //для закрытия с помощью мыши и кнопки esc
-  const openedPopup = document.querySelector('.pop-up_unHiden');
+const ClosePopupByMouse = (evt) => { //для закрытия с помощью мыши
+  const openedPopup = document.querySelector('.pop-up_unHiden'); //не получается вызвать после if
+  if (evt.target === openedPopup) {
+    closePopup(openedPopup);
+  }
+};
 
-  if ((openedPopup && evt.key === 'Escape') || evt.target === openedPopup) {
+const ClosePopupByKey = (evt) => { //для закрытия с помощью кнопки esc
+  if (evt.key === 'Escape') {
+    const openedPopup = document.querySelector('.pop-up_unHiden');
     closePopup(openedPopup);
   }
 };
@@ -60,12 +66,14 @@ function reveseSetNameAndJob(name, job){
 
 function openPopup(popup) {
   popup.classList.add('pop-up_unHiden');
-  document.addEventListener('keydown', heandleClosePopup);
-  document.addEventListener('click', heandleClosePopup);
+  document.addEventListener('keydown', ClosePopupByKey);
+  document.addEventListener('click', ClosePopupByMouse);
 }
 
 function closePopup(popup) {
   popup.classList.remove('pop-up_unHiden');
+  document.removeEventListener('keydown', ClosePopupByKey);
+  document.removeEventListener('click', ClosePopupByMouse);
 }
 
 //для создания блока
@@ -96,12 +104,10 @@ function makeBlock(place, source){
 function popOpenForEditButton(){
     openPopup(popUpEdit);
     setNameAndJob(name, job);
-    validation();
 }
 
 function popOpenForAddButton(){
     openPopup(popUpAdd);
-    validation();
 }
 
 function formEditSave(evt) {

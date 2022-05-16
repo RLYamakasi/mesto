@@ -73,3 +73,4 @@ formList.forEach((formElement) => {
 });
 };
 
+validation();
