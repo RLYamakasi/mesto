@@ -23,7 +23,7 @@ const popText = document.querySelector('.pop-up__text');
 //const closeButtonImage = document.querySelector('.closeButton_image');
 
 const ClosePopupByMouse = (evt) => { //для закрытия с помощью мыши
-  const openedPopup = document.querySelector('.pop-up_unHiden'); //не получается вызвать после if
+  const openedPopup = document.querySelector('.pop-up_unHiden');  //выдает ошибку,если кинуть openedPopup псоле if
   if (evt.target === openedPopup) {
     closePopup(openedPopup);
   }
@@ -67,7 +67,6 @@ function reveseSetNameAndJob(name, job){
 function openPopup(popup) {
   popup.classList.add('pop-up_unHiden');
   document.addEventListener('keydown', ClosePopupByKey);
-  document.addEventListener('click', ClosePopupByMouse);
 }
 
 function closePopup(popup) {
