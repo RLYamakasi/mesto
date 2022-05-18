@@ -17,10 +17,9 @@ const image = document.querySelectorAll('.element__image');
 const popUpImage = document.querySelector('.pop-up_type_image');
 const popBigImage = document.querySelector('.pop-up__bigImage');
 const popText = document.querySelector('.pop-up__text');
+const savebuttonEdit = popUpEdit.querySelector('.form__save-button');
+const savebuttonAdd = popUpAdd.querySelector('.form__save-button');
 
-//const closeButtonEdit = document.querySelector('.closeButton_edit');
-//const closeButtonAdd = document.querySelector('.closeButton_add');
-//const closeButtonImage = document.querySelector('.closeButton_image');
 
 const сlosePopupByMouse = (evt) => { //для закрытия с помощью мыши
   const openedPopup = document.querySelector('.pop-up_unHiden');  //выдает ошибку,если кинуть openedPopup псоле if
@@ -49,7 +48,6 @@ const openImage = (name, link) => {
   popText.textContent = name;
   popBigImage.alt = name;
   openPopup(popUpImage)
-  //console.log(name)
 }
 
 //чтобы при открытии pop-up, выставлялось имя
@@ -74,14 +72,15 @@ function closePopup(popup) {
   document.removeEventListener('keydown', сlosePopupByKey);
 }
 
+
 //для создания блока
 function formAddSave(evt) {
-
   evt.preventDefault();    
   elements.prepend(makeBlock(placeInput.value, sourceInput.value));                    
   placeInput.value = ""; //эти две строчки,чтобы обнулить поля,после ввода
   sourceInput.value = "";
   closePopup(popUpAdd);
+  savebuttonEdit.classList.add(ValidationData.inactiveButtonClass)
 }
 
 //создание блока
@@ -98,22 +97,21 @@ function makeBlock(place, source){
     return element 
 }
 
-
 function popOpenForEditButton(){
     openPopup(popUpEdit);
     setNameAndJob(name, job);
+    savebuttonEdit.classList.remove(ValidationData.inactiveButtonClass)
 }
 
 function popOpenForAddButton(){
     openPopup(popUpAdd);
-    validation(ValidationData);
 
 }
 
 function formEditSave(evt) {
     evt.preventDefault();                           
     reveseSetNameAndJob(name, job);
-    closePopup(popUpEdit)
+    closePopup(popUpEdit);
 }
 
 popUpAddButton.addEventListener("click", popOpenForAddButton);
