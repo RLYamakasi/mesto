@@ -17,16 +17,8 @@ const image = document.querySelectorAll('.element__image');
 const popUpImage = document.querySelector('.pop-up_type_image');
 const popBigImage = document.querySelector('.pop-up__bigImage');
 const popText = document.querySelector('.pop-up__text');
-const savebuttonEdit = popUpEdit.querySelector('.form__save-button');
-const savebuttonAdd = popUpAdd.querySelector('.form__save-button');
-
-
-const сlosePopupByMouse = (evt) => { //для закрытия с помощью мыши
-  const openedPopup = document.querySelector('.pop-up_unHiden');  //выдает ошибку,если кинуть openedPopup псоле if
-  if (evt.target === openedPopup) {
-    closePopup(openedPopup);
-  }
-};
+const saveButtonEdit = popUpEdit.querySelector('.form__save-button');
+const saveButtonAdd = popUpAdd.querySelector('.form__save-button');
 
 const сlosePopupByKey = (evt) => { //для закрытия с помощью кнопки esc
   if (evt.key === 'Escape') {
@@ -80,7 +72,7 @@ function formAddSave(evt) {
   placeInput.value = ""; //эти две строчки,чтобы обнулить поля,после ввода
   sourceInput.value = "";
   closePopup(popUpAdd);
-  savebuttonEdit.classList.add(ValidationData.inactiveButtonClass)
+  disableSubmitButton(saveButtonAdd,ValidationData);
 }
 
 //создание блока
@@ -100,7 +92,7 @@ function makeBlock(place, source){
 function popOpenForEditButton(){
     openPopup(popUpEdit);
     setNameAndJob(name, job);
-    savebuttonEdit.classList.remove(ValidationData.inactiveButtonClass)
+    saveButtonEdit.classList.remove(ValidationData.inactiveButtonClass)
 }
 
 function popOpenForAddButton(){
@@ -118,12 +110,15 @@ popUpAddButton.addEventListener("click", popOpenForAddButton);
 popUpEditButton.addEventListener("click", popOpenForEditButton);
 formAdd.addEventListener("submit", formAddSave); 
 formEdit.addEventListener("submit", formEditSave);
-document.addEventListener('click', сlosePopupByMouse);
+
 
 main.querySelectorAll('.pop-up').forEach((popup) => {
   popup.addEventListener('click', (e) => {
     if (e.target.classList.contains('pop-up__closeButtonImg')) { 
       closePopup(popup)
+    }
+    if (e.target.classList.contains('pop-up_unHiden')) { 
+      document.addEventListener('click', closePopup(popup));
     }
   })
 })

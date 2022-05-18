@@ -36,11 +36,15 @@ return inputList.some((input) => !input.validity.valid);
 
 const tooggleButtonState = (inputList,buttonsSubmit,ValidationData) => {
 if (hasInvalidInput(inputList)) {
-  buttonsSubmit.classList.add(ValidationData.inactiveButtonClass);
+  disableSubmitButton(buttonsSubmit,ValidationData);
 } else {
   buttonsSubmit.classList.remove(ValidationData.inactiveButtonClass);
 }
 };
+
+const disableSubmitButton = (buttonsSubmit,ValidationData) =>{
+  buttonsSubmit.classList.add(ValidationData.inactiveButtonClass);
+}
 
 const setEventListener = (formElement,ValidationData) => {
 const inputList = Array.from(
