@@ -39,11 +39,13 @@ if (hasInvalidInput(inputList)) {
   disableSubmitButton(buttonsSubmit,ValidationData);
 } else {
   buttonsSubmit.classList.remove(ValidationData.inactiveButtonClass);
+  buttonsSubmit.disabled = false; 
 }
 };
 
 const disableSubmitButton = (buttonsSubmit,ValidationData) =>{
   buttonsSubmit.classList.add(ValidationData.inactiveButtonClass);
+  buttonsSubmit.disabled = true; 
 }
 
 const setEventListener = (formElement,ValidationData) => {

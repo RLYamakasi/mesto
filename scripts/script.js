@@ -92,7 +92,7 @@ function makeBlock(place, source){
 function popOpenForEditButton(){
     openPopup(popUpEdit);
     setNameAndJob(name, job);
-    saveButtonEdit.classList.remove(ValidationData.inactiveButtonClass)
+    disableSubmitButton(saveButtonEdit,ValidationData);
 }
 
 function popOpenForAddButton(){
@@ -118,7 +118,7 @@ main.querySelectorAll('.pop-up').forEach((popup) => {
       closePopup(popup)
     }
     if (e.target.classList.contains('pop-up_unHiden')) { 
-      document.addEventListener('click', closePopup(popup));
+      closePopup(popup);
     }
   })
 })
