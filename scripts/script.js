@@ -11,7 +11,6 @@ const placeInput = document.querySelector('#place');
 const sourceInput = document.querySelector('#source');
 const name = document.querySelector('.profile__title');
 const job = document.querySelector('.profile__subtitle');
-const blockTemplate = document.querySelector('#blockTemplate').content;
 const elements = document.querySelector('.elements');
 const image = document.querySelectorAll('.element__image');
 const popUpImage = document.querySelector('.pop-up_type_image');
@@ -27,15 +26,15 @@ const сlosePopupByKey = (evt) => { //для закрытия с помощью 
   }
 };
 
-const deleteBlock = (event) => { 
+export const deleteBlock = (event) => { 
   event.target.closest(".element").remove(); 
 }
 
-const setLike = (event) => { 
+export const setLike = (event) => { 
   event.target.classList.toggle('element__button_active');
 }
 
-const openImage = (name, link) => {
+export const openImage = (name, link) => {
   popBigImage.src = link;
   popText.textContent = name;
   popBigImage.alt = name;
@@ -67,32 +66,20 @@ function closePopup(popup) {
 
 //для создания блока
 function formAddSave(evt) {
-  evt.preventDefault();    
-  elements.prepend(makeBlock(placeInput.value, sourceInput.value));                    
+  evt.preventDefault();
+  const elem = new Card(placeInput.value, sourceInput.value);
+  const cardElem = elem.makeBlock();
+  elements.prepend(cardElem);                   
   placeInput.value = ""; //эти две строчки,чтобы обнулить поля,после ввода
   sourceInput.value = "";
   closePopup(popUpAdd);
-  disableSubmitButton(saveButtonAdd,ValidationData);
 }
 
-//создание блока
-function makeBlock(place, source){
-    const element = blockTemplate.querySelector('.element').cloneNode(true);
-    const elementImg = element.querySelector('.element__image');
-    const elementTitle = element.querySelector(".element__text");
-    elementImg.src = source;
-    elementImg.alt = place;
-    elementTitle.textContent = place; 
-    element.querySelector('.element__bin').addEventListener('click', deleteBlock);
-    element.querySelector('.element__button').addEventListener('click', setLike);
-    elementImg.addEventListener('click', () =>  openImage(place, source))
-    return element 
-}
 
 function popOpenForEditButton(){
     openPopup(popUpEdit);
     setNameAndJob(name, job);
-    disableSubmitButton(saveButtonEdit,ValidationData);
+    //disableSubmitButton(saveButtonEdit,ValidationData);
 }
 
 function popOpenForAddButton(){
@@ -123,12 +110,26 @@ main.querySelectorAll('.pop-up').forEach((popup) => {
   })
 })
 
+ import{initialCards} from "./cards.js";
+ import Card from "./cards.js";
+
+
 //это для генерации начальных карточек
 function startBlocks(){
-  for(i = 0; i < initialCards.length; i++){ 
-    elements.prepend(makeBlock(initialCards[i].name, initialCards[i].link))
+  for(let i = 0; i < initialCards.length; i++){ 
+    const elem = new Card(initialCards[i].name, initialCards[i].link);
+    const cardElem = elem.makeBlock();
+    elements.prepend(cardElem);
   }  
 }
 
-startBlocks()
+import FormValidator from "./validate.js"
+import {ValidationData} from "./validate.js"
 
+const validateFormProfile = new FormValidator(ValidationData, placeInput);
+validateFormProfile.validation();
+const validateFormCard = new FormValidator(ValidationData, sourceInput);
+validateFormCard.validation();
+
+
+startBlocks()
