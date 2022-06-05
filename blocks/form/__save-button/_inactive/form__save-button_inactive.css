@@ -4,4 +4,9 @@
     border: 1px solid #000000;
     border-radius: 2px;
     opacity: 0.2;
+    cursor:default;
+}
+
+.form__save-button_inactive:hover{
+    background-color: white;
 }
