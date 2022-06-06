@@ -22,8 +22,8 @@
 @import url(../blocks/footer/footer.css);
 @import url(../blocks/footer/__text/footer__text.css);
 @import url(../blocks/pop-up/pop-up.css);
-@import url(../blocks/pop-up/__closeButton/pop-up__closeButton.css);
-@import url(../blocks/pop-up/__closeButtonImg/pop-up__closeButtonImg.css);
+@import url(../blocks/pop-up/_closeButton/pop-up_closeButton.css);
+@import url(../blocks/pop-up/_closeButtonImg/pop-up_closeButtonImg.css);
 @import url(../blocks/pop-up/_unHiden/pop-up_unHiden.css);
 @import url(../blocks/pop-up/__bigImage/pop-up__bigImage.css);
 @import url(../blocks/pop-up/__block/pop-up__block.css);

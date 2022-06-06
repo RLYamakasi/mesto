@@ -1,11 +1,10 @@
-import {InitialCards} from "./constants.js";
-import Card from "./cards.js";
+import {initialCards} from "./constants.js";
+import Card from "./Cards.js";
 import FormValidator from "./FormValidator.js"
-import {ValidationData} from "./constants.js"
+import {validationData} from "./constants.js"
 
-const main = document.querySelector('#main');
 const popUpEdit = document.querySelector('.pop-up_type_edit');
-const popUpEditButton = main.querySelector('.profile__button');
+const popUpEditButton = document.querySelector('.profile__button');
 const popUpAddButton = document.querySelector('.profile__add-button');
 const popUpAdd = document.querySelector('.pop-up_type_add');
 const formEdit = document.querySelector('#edit');
@@ -61,9 +60,9 @@ function closePopup(popup) {
 
 
 //для создания блока
-function AddSaveForm(evt) {
+function addSaveForm(evt) {
   evt.preventDefault();
-  StartClassForBlock(placeInput.value, sourceInput.value);   
+  startClassForBlock(placeInput.value, sourceInput.value);   
   placeInput.value = ""; //эти две строчки,чтобы обнулить поля,после ввода
   sourceInput.value = "";
   closePopup(popUpAdd);
@@ -77,11 +76,12 @@ function openPopForEditButton(){
 }
 
 function openPopForAddButton(){
+    saveButtonAdd.classList.add("form__save-button_inactive");
     openPopup(popUpAdd);
     validateFormProfile.enableValidation();
 }
 
-function EditSaveForm(evt) {
+function editSaveForm(evt) {
     evt.preventDefault();                           
     reveseSetNameAndJob(name, job);
     closePopup(popUpEdit);
@@ -89,13 +89,13 @@ function EditSaveForm(evt) {
 
 popUpAddButton.addEventListener("click", openPopForAddButton);
 popUpEditButton.addEventListener("click", openPopForEditButton);
-formAdd.addEventListener("submit", AddSaveForm); 
-formEdit.addEventListener("submit", EditSaveForm);
+formAdd.addEventListener("submit", addSaveForm); 
+formEdit.addEventListener("submit", editSaveForm);
 
 
-main.querySelectorAll('.pop-up').forEach((popup) => {
+document.querySelectorAll('.pop-up').forEach((popup) => {
   popup.addEventListener('click', (e) => {
-    if (e.target.classList.contains('pop-up__closeButtonImg') || e.target.classList.contains('pop-up_unHiden')) { 
+    if (e.target.classList.contains('pop-up_closeButtonImg') || e.target.classList.contains('pop-up_unHiden')) { 
       closePopup(popup)
     }
   })
@@ -103,21 +103,28 @@ main.querySelectorAll('.pop-up').forEach((popup) => {
   
 
 //это для генерации начальных карточек
-function renderStartBlocks() {
-  InitialCards.forEach((elem) => {
-    StartClassForBlock(elem.name, elem.link);
-  })
-}
-function StartClassForBlock(name,link){
-  const elem = new Card(name, link);
+function renderStartBlocks() { 
+  initialCards.forEach((elem) => { 
+    renderCard(elem.name, elem.link); 
+  }) 
+} 
+
+function renderCard(name,link){
+  const elem = new Card(name, link); 
   const cardElem = elem.makeBlock();
-  elements.prepend(cardElem); 
+  startClassForBlock(cardElem)
+
 }
 
+function startClassForBlock(cardElem){ 
+  elements.prepend(cardElem);  
+} 
 
-const validateFormProfile = new FormValidator(ValidationData, formEdit);
+
+
+const validateFormProfile = new FormValidator(validationData, formEdit);
 validateFormProfile.enableValidation();
-const validateFormCard = new FormValidator(ValidationData, formAdd);
+const validateFormCard = new FormValidator(validationData, formAdd);
 validateFormCard.enableValidation();
 
 

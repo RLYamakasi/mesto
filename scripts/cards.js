@@ -1,16 +1,20 @@
+import {openImage} from "./script.js";
+
+
 export default class Сard {
   constructor(place, source){
-    this.place = place;
-    this.source = source;
-    this.blockTemplate = document.querySelector('#blockTemplate').content;
+    this._place = place;
+    this._source = source;
+    this._blockTemplate = document.querySelector('#blockTemplate').content;
   }
   _getTemplate(){ 
-    return this.blockTemplate.querySelector('.element').cloneNode(true);
+    return this._blockTemplate.querySelector('.element').cloneNode(true);
    
   }
   _setEventListeners(){
-    this.element.querySelector('.element__bin').addEventListener('click', this._deleteBlock);
-    this.element.querySelector('.element__button').addEventListener('click', this._setLike);
+    this._img.addEventListener('click', () => openImage(this._place, this._source))
+    this._element.querySelector('.element__bin').addEventListener('click', this._deleteBlock);
+    this._element.querySelector('.element__button').addEventListener('click', this._setLike);
   }
   _deleteBlock = (event) => { 
     event.target.closest(".element").remove(); 
@@ -19,17 +23,15 @@ export default class Сard {
     event.target.classList.toggle('element__button_active');
   }
   makeBlock(){
-    this.element = this._getTemplate();
-    this.img = this.element.querySelector('.element__image');
-    this.title = this.element.querySelector(".element__text");
-    this.img.src = this.source;
-    this.img.alt = this.place;
-    this.title.textContent = this.place; 
-    this.img.addEventListener('click', () => openImage(this.place, this.source))
+    this._element = this._getTemplate();
+    this._img = this._element.querySelector('.element__image');
+    this._title = this._element.querySelector(".element__text");
+    this._img.src = this._source;
+    this._img.alt = this._place;
+    this._title.textContent = this._place; 
     this._setEventListeners();
-    return this.element
+    return this._element
     
   }
   }
 
-import {openImage} from "./script.js";

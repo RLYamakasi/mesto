@@ -1,4 +1,4 @@
-export const InitialCards = [
+export const initialCards = [
     {
       name: 'Архыз',
       link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
@@ -25,7 +25,7 @@ export const InitialCards = [
     }
 ];
 
-export const ValidationData = {
+export const validationData = {
     formSelector: ".form__field",
     formLabel: ".form__label",
     inputSelector: ".form__profile",
