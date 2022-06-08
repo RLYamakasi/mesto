@@ -23,7 +23,7 @@
 @import url(../blocks/footer/__text/footer__text.css);
 @import url(../blocks/pop-up/pop-up.css);
 @import url(../blocks/pop-up/__close-button/pop-up-close-button.css);
-@import url(../blocks/pop-up/_close-button-img/pop-up_close-button-img.css);
+@import url(../blocks/pop-up/__close-button-img/pop-up__close-button-img.css);
 @import url(../blocks/pop-up/_un-hiden/pop-up_un-hiden.css);
 @import url(../blocks/pop-up/__big-image/pop-up__big-image.css);
 @import url(../blocks/pop-up/__block/pop-up__block.css);

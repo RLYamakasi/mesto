@@ -101,7 +101,7 @@ formEdit.addEventListener("submit", editSaveForm);
 
 document.querySelectorAll('.pop-up').forEach((popup) => {
   popup.addEventListener('click', (e) => {
-    if (e.target.classList.contains('pop-up_close-button-img') || e.target.classList.contains('pop-up_un-hiden')) { 
+    if (e.target.classList.contains('pop-up__close-button-img') || e.target.classList.contains('pop-up_un-hiden')) { 
       closePopup(popup)
     }
   })
