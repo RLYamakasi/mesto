@@ -1,4 +1,6 @@
-import {openImage} from "./script.js";
+import { PopupWithImage } from "./Popup.js"
+import { popUpImage } from "./script.js";
+// popupTypeImage.setEventListeners();
 
 
 export default class Сard {
@@ -6,13 +8,14 @@ export default class Сard {
     this._place = place;
     this._source = source;
     this._blockTemplate = document.querySelector('#blockTemplate').content;
+    this._popupTypeImage = new PopupWithImage(popUpImage,this._place,this._source);
   }
   _getTemplate(){ 
     return this._blockTemplate.querySelector('.element').cloneNode(true);
    
   }
   _setEventListeners(){
-    this._img.addEventListener('click', () => openImage(this._place, this._source))
+    this._img.addEventListener('click', () => this._popupTypeImage.openPopup())
     this._element.querySelector('.element__bin').addEventListener('click', this._deleteBlock);
     this._element.querySelector('.element__button').addEventListener('click', this._setLike);
   }
@@ -31,7 +34,6 @@ export default class Сard {
     this._title.textContent = this._place; 
     this._setEventListeners();
     return this._element
-    
   }
   }
 
