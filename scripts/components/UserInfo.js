@@ -1,4 +1,4 @@
-import {nameInput,jobInput} from "./script.js"
+import {nameInput,jobInput} from "../script.js"
 
 export default class UserInfo {
     constructor(name,job){

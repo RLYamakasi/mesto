@@ -1,5 +1,5 @@
-import { PopupWithImage } from "./Popup.js"
-import { popUpImage } from "./script.js";
+import { PopupWithImage } from "../components/PopupWithImage.js"
+import { popUpImage } from "../script.js";
 // popupTypeImage.setEventListeners();
 
 

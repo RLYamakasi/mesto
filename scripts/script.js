@@ -1,13 +1,13 @@
 import '../pages/index.css'; //для webpack
 
 import {initialCards} from "./constants.js";
-import Card from "./Card.js";
-import Popup from "./Popup.js";
-import FormValidator from "./FormValidator.js"
+import Card from "./components/Card.js";
+import Popup from "./components/Popup.js";
+import FormValidator from "./components/FormValidator.js"
 import {validationData} from "./constants.js"
-import UserInfo from "./UserInfo.js";
-import Section from "./Section.js";
-import {PopupWithForm} from "./Popup.js";
+import UserInfo from "./components/UserInfo.js";
+import Section from "./components/Section.js";
+import {PopupWithImage} from "./components/PopupWithImage.js";
 
 const elements = document.querySelector('.elements');
 
