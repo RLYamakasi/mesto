@@ -1,4 +1,4 @@
- import '../pages/index.css'; //для webpack
+//  import '../pages/index.css'; //для webpack
 
 import {initialCards} from "./constants.js";
 import Card from "./components/Card.js";
@@ -34,12 +34,9 @@ const saveButtonAdd = popUpAdd.querySelector('.form__save-button');
 const validateFormProfile = new FormValidator(validationData, formEdit);
 validateFormProfile.enableValidation();
 const validateFormCard = new FormValidator(validationData, formAdd);
-const popupWithImage = new PopupWithImage(popUpImage,place,source); 
+const popupWithImage = new PopupWithImage(popUpImage);
 validateFormCard.enableValidation();
-// const popupTypeEdit = new Popup(popUpEdit);
-// popupTypeEdit.setEventListeners();
-// const popupTypeAdd = new Popup(popUpAdd);
-// popupTypeAdd.setEventListeners();
+
 const userInfo = new UserInfo(name,job);
 const section = new Section();
 section.addItem()
@@ -48,8 +45,7 @@ const popupTypeAdd = new PopupWithForm(popUpAdd,saveButtonAdd);
 const popupTypeEdit = new PopupWithForm(popUpEdit,saveButtonEdit);
 popupTypeAdd.generate()
 popupTypeEdit.generate()
-// popupWithFormEdit._getInputValues()
-// popupWithFormAdd._getInputValues()
+
 
 
 popUpAddButton.addEventListener("click", openPopForAddButton);
@@ -61,7 +57,8 @@ formEdit.addEventListener("submit", editSaveForm);
 //для создания блока
 function addSaveForm(evt) {
   evt.preventDefault();
-  const cardElement = createCard(name,source); 
+  popupTypeAdd._getInputValues()
+  const cardElement = createCard(popupTypeAdd._getInputValues()[0],popupTypeAdd._getInputValues()[1]); 
   section.renderer(cardElement)
   popupTypeAdd.closePopup();
 }
@@ -90,14 +87,8 @@ const cardElement = card.makeBlock();
 return cardElement
 }
 
-// export function handleCardClick(name, link) {  ВЫВОДИТ ОШИБКУ this._handleCardClick not a function
-//    popupWithImage.openPopup(name, link)
-//   console.log(name,link)
-// }
+export function handleCardClick(name,link) {
+  popupWithImage.openPopup(name, link)
+ }
 
 
-// export function makeImgForPopup(name, link) {
-//  const popupTypeImage = new PopupWithImage(popUpImage,name, link);
-//  return popupTypeImage;
-// }
-// console.log(makeImgForPopup())

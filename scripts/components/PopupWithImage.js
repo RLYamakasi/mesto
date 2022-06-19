@@ -1,4 +1,7 @@
 import Popup from "../components/Popup.js";
+import {popBigImage,popText} from "../script.js"
+
+
 
 export class PopupWithImage extends Popup{
     constructor(popup) {
@@ -12,5 +15,4 @@ export class PopupWithImage extends Popup{
     popText.textContent = name;
     popBigImage.alt = name;
   }
-  
   }
