@@ -1,4 +1,4 @@
-import '../pages/index.css'; //для webpack
+ import '../pages/index.css'; //для webpack
 
 import {initialCards} from "./constants.js";
 import Card from "./components/Card.js";
@@ -8,6 +8,7 @@ import {validationData} from "./constants.js"
 import UserInfo from "./components/UserInfo.js";
 import Section from "./components/Section.js";
 import {PopupWithImage} from "./components/PopupWithImage.js";
+import {PopupWithForm} from "./components/PopupWithForm.js";
 
 const elements = document.querySelector('.elements');
 
@@ -18,11 +19,12 @@ export const nameInput = document.querySelector('#name');
 export const jobInput = document.querySelector('#job');
 export const placeInput = document.querySelector('#place'); 
 export const sourceInput = document.querySelector('#source');
+export const popUpEdit = document.querySelector('.pop-up_type_edit');
+export const popUpAdd = document.querySelector('.pop-up_type_add');
 
-const popUpEdit = document.querySelector('.pop-up_type_edit');
+
 const popUpEditButton = document.querySelector('.profile__button');
 const popUpAddButton = document.querySelector('.profile__add-button');
-const popUpAdd = document.querySelector('.pop-up_type_add');
 const formEdit = document.querySelector('#edit');
 const formAdd = document.querySelector('#add');
 const name = document.querySelector('.profile__title');
@@ -32,17 +34,22 @@ const saveButtonAdd = popUpAdd.querySelector('.form__save-button');
 const validateFormProfile = new FormValidator(validationData, formEdit);
 validateFormProfile.enableValidation();
 const validateFormCard = new FormValidator(validationData, formAdd);
+const popupWithImage = new PopupWithImage(popUpImage,place,source); 
 validateFormCard.enableValidation();
-const popupTypeEdit = new Popup(popUpEdit);
-popupTypeEdit.setEventListeners();
-const popupTypeAdd = new Popup(popUpAdd);
-popupTypeAdd.setEventListeners();
+// const popupTypeEdit = new Popup(popUpEdit);
+// popupTypeEdit.setEventListeners();
+// const popupTypeAdd = new Popup(popUpAdd);
+// popupTypeAdd.setEventListeners();
 const userInfo = new UserInfo(name,job);
 const section = new Section();
 section.addItem()
-const FormAdd = new PopupWithForm(popUpAdd,saveButtonAdd);
-const FormEdit = new PopupWithForm(popUpEdit,saveButtonEdit);
 
+const popupTypeAdd = new PopupWithForm(popUpAdd,saveButtonAdd);
+const popupTypeEdit = new PopupWithForm(popUpEdit,saveButtonEdit);
+popupTypeAdd.generate()
+popupTypeEdit.generate()
+// popupWithFormEdit._getInputValues()
+// popupWithFormAdd._getInputValues()
 
 
 popUpAddButton.addEventListener("click", openPopForAddButton);
@@ -50,14 +57,12 @@ popUpEditButton.addEventListener("click", openPopForEditButton);
 formAdd.addEventListener("submit", addSaveForm); 
 formEdit.addEventListener("submit", editSaveForm);
 
+
 //для создания блока
 function addSaveForm(evt) {
   evt.preventDefault();
-  const card = new Card(placeInput.value, sourceInput.value);  
-  const cardElement = card.makeBlock(); 
+  const cardElement = createCard(name,source); 
   section.renderer(cardElement)
-  placeInput.value = ""; //эти две строчки,чтобы обнулить поля,после ввода
-  sourceInput.value = "";
   popupTypeAdd.closePopup();
 }
 
@@ -77,3 +82,22 @@ function editSaveForm(evt) {
     userInfo.setUserInfo();
     popupTypeEdit.closePopup();
 }
+
+
+function createCard(name,source) {
+const card = new Card(name,source);
+const cardElement = card.makeBlock();
+return cardElement
+}
+
+// export function handleCardClick(name, link) {  ВЫВОДИТ ОШИБКУ this._handleCardClick not a function
+//    popupWithImage.openPopup(name, link)
+//   console.log(name,link)
+// }
+
+
+// export function makeImgForPopup(name, link) {
+//  const popupTypeImage = new PopupWithImage(popUpImage,name, link);
+//  return popupTypeImage;
+// }
+// console.log(makeImgForPopup())
