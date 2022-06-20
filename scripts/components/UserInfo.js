@@ -9,14 +9,13 @@ export default class UserInfo {
       );
     }
     getUserInfo(){
-        const formValues = {};
-      this.userList.forEach((item,index) =>{
-        formValues[index] = item.value;
-      });
-      this.formValues(formValues)
+      const formValues = {};
+      formValues[0] = this.name.textContent
+      formValues[1] = this.job.textContent
+      return formValues;
     }
     setUserInfo(values){
-        this.name.textContent = values[0];
-        this.job.textContent = values[1];
+      this.name.textContent = values[0]; 
+      this.job.textContent = values[1]; 
     }
 }

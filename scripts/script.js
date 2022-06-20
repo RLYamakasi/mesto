@@ -39,31 +39,27 @@ const userInfo = new UserInfo(name,job);
 const section = new Section(initialCards,renderer);
 section.addItem()
 
-const popupTypeAdd = new PopupWithForm(popUpAdd,saveButtonAdd);
-const popupTypeEdit = new PopupWithForm(popUpEdit,saveButtonEdit);
+const popupTypeAdd = new PopupWithForm(popUpAdd,addSaveForm);
+const popupTypeEdit = new PopupWithForm(popUpEdit,editSaveForm);
 popupTypeAdd.generate()
 popupTypeEdit.generate()
 
-
-
 popUpAddButton.addEventListener("click", openPopForAddButton);
 popUpEditButton.addEventListener("click", openPopForEditButton);
-formAdd.addEventListener("submit", addSaveForm); 
-formEdit.addEventListener("submit", editSaveForm);
-
 
 //для создания блока
-function addSaveForm(evt) {
-  evt.preventDefault();
-  const cardElement = createCard(submitHandler(popupTypeAdd)[0],submitHandler(popupTypeAdd)[1]); 
-  section.renderer(cardElement)
+function addSaveForm() {
+  // const cardElement = createCard(submitHandler(popupTypeAdd)[0],submitHandler(popupTypeAdd)[1]);
+  section.renderer(submitHandler(popupTypeAdd)[0],submitHandler(popupTypeAdd)[1])
   popupTypeAdd.closePopup();
 }
 
 function openPopForEditButton(){
-    popupTypeEdit.openPopup();
-    userInfo.getUserInfo();
-    //disableSubmitButton(saveButtonEdit,ValidationData);
+  popupTypeEdit.openPopup(); 
+  const data = userInfo.getUserInfo();
+  nameInput.value = data[0]; 
+  jobInput.value = data[1]; 
+
 }
 
 function openPopForAddButton(){
@@ -71,10 +67,8 @@ function openPopForAddButton(){
   popupTypeAdd.openPopup();
 }
 
-function editSaveForm(evt) {
-    evt.preventDefault();                           
-    name.textContent = submitHandler(popupTypeEdit)[0];
-    job.textContent = submitHandler(popupTypeEdit)[1];
+function editSaveForm() {                           
+    userInfo.setUserInfo(submitHandler(popupTypeEdit))
     popupTypeEdit.closePopup();
 }
 
@@ -95,9 +89,8 @@ function handleCardClick(name,link) {
  }
 
 
-function renderer(name,link){
-  const card = new Card(name, link);
-  const cardElement = card.makeBlock(); 
+ function renderer(name,source){ 
+  const cardElement = createCard(name,source);
   elements.prepend(cardElement);
-}
+ }
 
