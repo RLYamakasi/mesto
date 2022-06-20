@@ -1,18 +1,17 @@
 import Popup from "../components/Popup.js";
-import {popBigImage,popText} from "../script.js"
-
-
 
 export class PopupWithImage extends Popup{
-    constructor(popup) {
+    constructor(popup,popBigImage,popText) {
       super(popup)
+      this.popBigImage - popBigImage;
+      this.popText = popText;
 
    }
   
   openPopup(name,link) {
     super.openPopup()
-    popBigImage.src = link;
-    popText.textContent = name;
-    popBigImage.alt = name;
+    this.popBigImage.src = link;
+    this.popText .textContent = name;
+    this.popBigImage.alt = name;
   }
   }

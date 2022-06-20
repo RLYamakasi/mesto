@@ -1,10 +1,5 @@
-import { popUpImage,handleCardClick} from "../script.js";
-import { PopupWithImage } from "../components/PopupWithImage.js" 
-// popupTypeImage.setEventListeners();
-
-
 export default class Card {
-  constructor(place,source){ 
+  constructor(place,source,handleCardClick){ 
     this._place = place; 
     this._source = source; 
     this._blockTemplate = document.querySelector('#blockTemplate').content; 

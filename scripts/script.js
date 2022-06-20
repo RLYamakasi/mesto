@@ -12,17 +12,15 @@ import {PopupWithForm} from "./components/PopupWithForm.js";
 
 const elements = document.querySelector('.elements');
 
-export const popBigImage = document.querySelector('.pop-up__big-image');
-export const popText = document.querySelector('.pop-up__text');
-export const popUpImage = document.querySelector('.pop-up_type_image');
-export const nameInput = document.querySelector('#name'); 
-export const jobInput = document.querySelector('#job');
-export const placeInput = document.querySelector('#place'); 
-export const sourceInput = document.querySelector('#source');
-export const popUpEdit = document.querySelector('.pop-up_type_edit');
-export const popUpAdd = document.querySelector('.pop-up_type_add');
-
-
+const popBigImage = document.querySelector('.pop-up__big-image');
+const popText = document.querySelector('.pop-up__text');
+const popUpImage = document.querySelector('.pop-up_type_image');
+const nameInput = document.querySelector('#name'); 
+const jobInput = document.querySelector('#job');
+const placeInput = document.querySelector('#place'); 
+const sourceInput = document.querySelector('#source');
+const popUpEdit = document.querySelector('.pop-up_type_edit');
+const popUpAdd = document.querySelector('.pop-up_type_add');
 const popUpEditButton = document.querySelector('.profile__button');
 const popUpAddButton = document.querySelector('.profile__add-button');
 const formEdit = document.querySelector('#edit');
@@ -34,11 +32,11 @@ const saveButtonAdd = popUpAdd.querySelector('.form__save-button');
 const validateFormProfile = new FormValidator(validationData, formEdit);
 validateFormProfile.enableValidation();
 const validateFormCard = new FormValidator(validationData, formAdd);
-const popupWithImage = new PopupWithImage(popUpImage);
+const popupWithImage = new PopupWithImage(popUpImage,popBigImage,popText);
 validateFormCard.enableValidation();
 
 const userInfo = new UserInfo(name,job);
-const section = new Section();
+const section = new Section(initialCards,renderer);
 section.addItem()
 
 const popupTypeAdd = new PopupWithForm(popUpAdd,saveButtonAdd);
@@ -57,8 +55,7 @@ formEdit.addEventListener("submit", editSaveForm);
 //для создания блока
 function addSaveForm(evt) {
   evt.preventDefault();
-  popupTypeAdd._getInputValues()
-  const cardElement = createCard(popupTypeAdd._getInputValues()[0],popupTypeAdd._getInputValues()[1]); 
+  const cardElement = createCard(submitHandler(popupTypeAdd)[0],submitHandler(popupTypeAdd)[1]); 
   section.renderer(cardElement)
   popupTypeAdd.closePopup();
 }
@@ -76,19 +73,31 @@ function openPopForAddButton(){
 
 function editSaveForm(evt) {
     evt.preventDefault();                           
-    userInfo.setUserInfo();
+    name.textContent = submitHandler(popupTypeEdit)[0];
+    job.textContent = submitHandler(popupTypeEdit)[1];
     popupTypeEdit.closePopup();
 }
 
+function submitHandler(popup){
+  const values = popup.getInputValues()
+  return values
+  
+}
 
 function createCard(name,source) {
-const card = new Card(name,source);
+const card = new Card(name,source,handleCardClick);
 const cardElement = card.makeBlock();
 return cardElement
 }
 
-export function handleCardClick(name,link) {
+function handleCardClick(name,link) {
   popupWithImage.openPopup(name, link)
  }
 
+
+function renderer(name,link){
+  const card = new Card(name, link);
+  const cardElement = card.makeBlock(); 
+  elements.prepend(cardElement);
+}
 

@@ -1,5 +1,3 @@
-import {popBigImage,popText,placeInput,sourceInput} from "../script.js"
-
 export default class Popup {
     constructor(popup) {
         this._popup = popup;
