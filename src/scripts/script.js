@@ -33,6 +33,7 @@ const validateFormProfile = new FormValidator(validationData, formEdit);
 validateFormProfile.enableValidation();
 const validateFormCard = new FormValidator(validationData, formAdd);
 const popupWithImage = new PopupWithImage(popUpImage,popBigImage,popText);
+popupWithImage.setEventListeners();
 validateFormCard.enableValidation();
 
 const userInfo = new UserInfo(name,job);
@@ -49,7 +50,6 @@ popUpEditButton.addEventListener("click", openPopForEditButton);
 
 //для создания блока
 function addSaveForm() {
-  // const cardElement = createCard(submitHandler(popupTypeAdd)[0],submitHandler(popupTypeAdd)[1]);
   section.renderer(submitHandler(popupTypeAdd)[0],submitHandler(popupTypeAdd)[1])
   popupTypeAdd.closePopup();
 }

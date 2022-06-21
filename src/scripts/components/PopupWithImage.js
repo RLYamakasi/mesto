@@ -5,14 +5,13 @@ export class PopupWithImage extends Popup{
       super(popup)
       this.popBigImage = popBigImage;
       this.popText = popText;
-
    }
   
   openPopup(name,link) {
-    super.setEventListeners()
     super.openPopup()
     this.popBigImage.src = link;
     this.popText .textContent = name;
     this.popBigImage.alt = name;
   }
-  }
+    
+}

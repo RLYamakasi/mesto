@@ -46,20 +46,3 @@ closePopup(){
   }
 
   
-
-  // constructor(validationData, formElement) {
-  //   this._formSelector = validationData.formSelector;
-  //   this._formLabel = validationData.formLabel;
-  //   this._inputSelector = validationData.inputSelector;
-  //   this._submitButtonSelector = validationData.submitButtonSelector;
-  //   this._inactiveButtonClass = validationData.inactiveButtonClass;
-  //   this._inputErrorClass = validationData.inputErrorClass;
-  //   this._errorClass = validationData.errorClass;
-  //   this._formElement = formElement;
-  //   this._buttonElement = this._formElement.querySelector(
-  //     this._submitButtonSelector
-  //   );
-  //   this._inputList = Array.from(
-  //     this._formElement.querySelectorAll(this._inputSelector)
-  //   );
-  // }
