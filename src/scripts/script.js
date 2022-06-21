@@ -63,7 +63,7 @@ function openPopForEditButton(){
 }
 
 function openPopForAddButton(){
-  validateFormProfile.disableSubmitButton();
+  validateFormCard.disableSubmitButton();
   popupTypeAdd.openPopup();
 }
 
