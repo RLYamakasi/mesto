@@ -1,4 +1,4 @@
-//  import '../pages/index.css'; //для webpack
+import '../pages/index.css'; //для webpack
 
 import {initialCards} from "./constants.js";
 import Card from "./components/Card.js";
