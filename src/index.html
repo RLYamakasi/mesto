@@ -32,7 +32,10 @@
         <div class="element">
             <img src="images/Karachaevsk.jpg" class="element__image">    
             <h2 class="element__text"></h2>
-            <button class="element__button" type="button"></button>
+            <div class="element__like">
+                <button class="element__button" type="button"></button>
+                <div class="element__like-count">0</div>
+            </div>
             <button class="element__bin"></button>
         </div>
     </template>
@@ -82,6 +85,30 @@
             <img src="https://images.assetsdelivery.com/compings_v2/yehorlisnyi/yehorlisnyi2104/yehorlisnyi210400016.jpg" alt="" class="pop-up__big-image"> 
             <p class="pop-up__text">test</p>
         </div>            
+    </div>
+    <div class="pop-up pop-up_type_confirm" id="popCon"> 
+        <div class="pop-up__square"> 
+            <button class="pop-up__close-button" type="button"> 
+                <img src="<%=require('./images/Close-Icon.svg')%>" alt="кнопка закрыть" class="pop-up__close-button-img"> 
+            </button>
+            <p class="pop-up__text">Вы уверены?</p>
+            <button class="pop-up__save-button" type="submit">Да</button>
+        </div>
+    </div>
+    <div class="pop-up pop-up_type_updateAvatar" id="popUpdate"> 
+        <div class="form">
+            <button class="pop-up__close-button " type="button">
+                <img src="<%=require('./images/Close-Icon.svg')%>" alt="кнопка закрыть" class="pop-up__close-button-img">
+            </button>
+            <h3 class="form__title">Обновить аватар</h3>
+            <form class="form__field" id="avatar" novalidate>
+                <label class="form__label">
+                    <input type="url" class="form__profile" id="url" placeholder="Ссылка на картинку" required>
+                    <span id="url-error" class="form__error">скрытый текст</span>
+                </label>
+                <button class="form__save-button" type="submit">Сохранить</button>
+            </form> 
+        </div>
     </div>
     <footer class="footer">
         <p class="footer__text">© 2022 Mesto Russia</p>

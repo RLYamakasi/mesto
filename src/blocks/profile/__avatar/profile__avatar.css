@@ -1,10 +1,17 @@
 .profile__avatar{
+    max-height: 120px;
     max-width: 120px;
-    max-height: 100%;
+    border-radius: 100px;
     grid-area: avatar;
+    cursor: pointer;
 }
 @media screen and (max-width: 767px) {
     .profile__avatar{
         justify-self:center;
     }
 }
+
+.profile__avatar:hover{
+    opacity: 0.2;
+} 
+
