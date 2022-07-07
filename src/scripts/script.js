@@ -66,7 +66,7 @@ avatar.addEventListener("click", openPopForChangeAvatar)
 //для создания блока
 function addSaveForm() {
   postToServerCards(submitHandler(popupTypeAdd).name,submitHandler(popupTypeAdd).about)
-  renderer(submitHandler(popupTypeAdd).name,submitHandler(popupTypeAdd).about)
+  renderer(submitHandler(popupTypeAdd).name,submitHandler(popupTypeAdd).about,0,userInfo.userId)
   popupTypeAdd.closePopup();
 }
 
@@ -99,7 +99,8 @@ function submitHandler(popup){
 
 
 function createCard(name,source,likes,ownerId,Id) {
-  const card = new Card(name,source,likes,ownerId,Id,handleCardClick,openPopCon,deleteCardFromServer,setLike);
+  const myid = userInfo.userId;
+  const card = new Card(name,source,likes,ownerId,Id,handleCardClick,openPopCon,deleteCardFromServer,setLike,myid);
   const cardElement = card.makeBlock();
   return cardElement
 }
@@ -107,6 +108,11 @@ function createCard(name,source,likes,ownerId,Id) {
 function handleCardClick(name,link) {
   popupWithImage.openPopup(name, link)
  }
+
+
+function signToPopup(){
+  
+}
 
 
  function renderer(name,source,likes,ownerId,Id){
@@ -122,7 +128,6 @@ function handleCardClick(name,link) {
     'Content-Type': 'application/json'
   }
 }); 
-
 
 
 function getServerCards(){
@@ -162,7 +167,6 @@ function deleteCardFromServer(id){
 
 
 
-//Я потратил кучу часов,чтобы получить id и отправить его в класс card,я уже просто не знаю что делать и как исправлять другие ошибки
 function setUserdata(){
   api.getProfile()
   .then(res => {
@@ -174,7 +178,7 @@ function setUserdata(){
    .then((res) => {
     console.log(res)
     userInfo.setUserInfo(res)
-    return res._id
+    userInfo.getUserId(res._id)
      })
      .catch((err) => {
       console.log(err);
