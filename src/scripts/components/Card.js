@@ -1,17 +1,19 @@
 export default class Card {
-  constructor(place,source,like,ownerId,Id,handleCardClick,openPopCon,popConButton,deleteCardFromServer){
+  constructor(place,source,like,ownerId,Id,handleCardClick,openPopCon,deleteCardFromServer,setLike){
+    this.setLike = setLike;
     this.deleteCardFromServer = deleteCardFromServer;
     this.Id = Id;
-    this.myId = 'c9e1769999019a990e7af0c9';
     this._ownerId = ownerId;
     this._like = like;
-    this.popConButton = popConButton;
     this.openPopCon = openPopCon;
     this._place = place; 
     this._source = source; 
     this._blockTemplate = document.querySelector('#blockTemplate').content; 
     this._handleCardClick = handleCardClick;
-  } 
+  }
+  _getId(id){
+    this.id = id
+  }
 
   _getTemplate(){  
     return this._blockTemplate.querySelector('.element').cloneNode(true); 
@@ -29,10 +31,7 @@ export default class Card {
    _confirmDelete = () => {
     this.openPopCon();
     this.deleteCardFromServer(this.Id)
-    this.popConButton.addEventListener('submit', (evt) => {
-      evt.preventDefault();
-      this._element.remove()
-    })
+    
 
     // this.popConButton.addEventListener('click',  this._element.remove());
      console.log(this._element)
@@ -44,13 +43,16 @@ export default class Card {
    }
 
   _setLike = (event) => {  
+ 
     event.target.classList.toggle('element__button_active');
     this._likeCount.innerText ++;
+    this.setLike(this.myId)
   } 
 
-  makeBlock(){ 
+  makeBlock(){
+    console.log()
     this._element = this._getTemplate();
-    if(this._ownerId !== this.myId){
+    if(this._ownerId !== 1){
       this._element.querySelector('.element__bin').classList.add('element__bin_hiden');
     }
     this._likeCount = this._element.querySelector('.element__like-count'); 

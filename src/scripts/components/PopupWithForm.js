@@ -26,7 +26,8 @@ export class PopupWithForm extends Popup{
       this._inputList.forEach((item,index) =>{
         formValues[index] = item.value;
       });
-      return formValues;
+      const values = {name:formValues[0],about:formValues[1]}
+      return values;
     }
   
     generate() {

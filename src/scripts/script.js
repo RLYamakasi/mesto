@@ -13,7 +13,7 @@ import {PopupWithForm} from "./components/PopupWithForm.js";
 import {PopupWithConfirm} from "./components/PopupWithConfirm.js";
 import Api from "./components/Api.js"
 
-const elements = document.querySelector('.elements'); 
+const cardsContainer = document.querySelector('.elements'); 
 const popBigImage = document.querySelector('.pop-up__big-image');
 const popText = document.querySelector('.pop-up__text');
 const popUpImage = document.querySelector('.pop-up_type_image');
@@ -23,9 +23,9 @@ const placeInput = document.querySelector('#place');
 const sourceInput = document.querySelector('#source');
 const popUpEdit = document.querySelector('.pop-up_type_edit');
 const popUpAdd = document.querySelector('.pop-up_type_add');
-const popUpCon = document.querySelector('.pop-up_type_confirm');
+const popUpConfirm = document.querySelector('.pop-up_type_confirm');
 const popUpChange = document.querySelector('.pop-up_type_updateAvatar');
-const popConButton = popUpCon.querySelector('.pop-up__save-button');
+const popConButton = popUpConfirm.querySelector('.pop-up__save-button');
 const popUpEditButton = document.querySelector('.profile__button');
 const popUpAddButton = document.querySelector('.profile__add-button');
 const formEdit = document.querySelector('#edit');
@@ -36,6 +36,7 @@ const job = document.querySelector('.profile__subtitle');
 const avatar = document.querySelector('.profile__avatar'); 
 const saveButtonEdit = popUpEdit.querySelector('.form__save-button');
 const saveButtonAdd = popUpAdd.querySelector('.form__save-button');
+const section = new Section(cardsContainer,renderer);
 const validateFormProfile = new FormValidator(validationData, formEdit);
 const validateFormCard = new FormValidator(validationData, formAdd);
 const validateFormAvatar = new FormValidator(validationData, formAvatar);
@@ -46,10 +47,11 @@ validateFormProfile.enableValidation();
 validateFormAvatar.enableValidation();
 
 const userInfo = new UserInfo(name,job);
-const popupTypeChange = new PopupWithChangeAvatar(popUpChange,avatar);
-const popupTypeCon = new PopupWithConfirm(popUpCon);
+const popupTypeChange = new PopupWithChangeAvatar(popUpChange,avatar,popConButton,patchAvatar);
+const popupTypeCon = new PopupWithConfirm(popUpConfirm);
 const popupTypeAdd = new PopupWithForm(popUpAdd,addSaveForm);
 const popupTypeEdit = new PopupWithForm(popUpEdit,editSaveForm);
+popupTypeEdit.setEventListeners()
 popupTypeChange.setEventListeners()
 popupTypeCon.setEventListeners()
 popupTypeAdd.generate()
@@ -58,30 +60,31 @@ popupTypeEdit.generate()
 
 popUpAddButton.addEventListener("click", openPopForAddButton);
 popUpEditButton.addEventListener("click", openPopForEditButton);
-avatar.addEventListener("click", openPopupChange)
+avatar.addEventListener("click", openPopForChangeAvatar)
 
 
 //для создания блока
 function addSaveForm() {
-  PostToServerCards(submitHandler(popupTypeAdd)[0],submitHandler(popupTypeAdd)[1])
-  renderer(submitHandler(popupTypeAdd)[0],submitHandler(popupTypeAdd)[1],0)
+  postToServerCards(submitHandler(popupTypeAdd).name,submitHandler(popupTypeAdd).about)
+  renderer(submitHandler(popupTypeAdd).name,submitHandler(popupTypeAdd).about)
   popupTypeAdd.closePopup();
 }
 
 function openPopForEditButton(){
-  openPop(popupTypeEdit); 
+  popupTypeEdit.openPopup(); 
   const data = userInfo.getUserInfo();
-  nameInput.value = data[0]; 
-  jobInput.value = data[1]; 
+  console.log(data)
+  nameInput.value = data.name; 
+  jobInput.value = data.job; 
 
 }
 
 function openPopForAddButton(){
   validateFormCard.disableSubmitButton();
-  openPop(popupTypeAdd);
+  popupTypeAdd.openPopup();
 }
 
-function editSaveForm() {   
+function editSaveForm() { 
   userInfo.setUserInfo(submitHandler(popupTypeEdit))
   patchProfile()
   popupTypeEdit.closePopup();
@@ -89,29 +92,16 @@ function editSaveForm() {
 
 
 function submitHandler(popup){
-  const values = popup.getInputValues()
-  // patchProfile(values)
-  return values
+  let values = popup.getInputValues()
+  console.log(values)
+  return values;
 }
-
-function patchProfile(){
-  const values = submitHandler(popupTypeEdit);
-  const name = values[0];
-  const about = values[1];
-  console.log(avatar.src)
-  api.patchProfile(name,about,avatar.src)
-  .then(res => res.json())
-  .then((result) => {
-    console.log(result);
-   });
-}
-
 
 
 function createCard(name,source,likes,ownerId,Id) {
-const card = new Card(name,source,likes,ownerId,Id,handleCardClick,openPopCon,popConButton,deleteCardFromServer);
-const cardElement = card.makeBlock();
-return cardElement
+  const card = new Card(name,source,likes,ownerId,Id,handleCardClick,openPopCon,deleteCardFromServer,setLike);
+  const cardElement = card.makeBlock();
+  return cardElement
 }
 
 function handleCardClick(name,link) {
@@ -119,9 +109,9 @@ function handleCardClick(name,link) {
  }
 
 
- function renderer(name,source,likes,ownerId,Id){ 
+ function renderer(name,source,likes,ownerId,Id){
   const cardElement = createCard(name,source,likes,ownerId,Id);
-  elements.prepend(cardElement);
+  cardsContainer.prepend(cardElement);
  }
 
  const api = new Api({
@@ -133,46 +123,118 @@ function handleCardClick(name,link) {
 }); 
 
 
+
 function getServerCards(){
   api.getInitialCards()
-  .then(res => res.json())
-   .then((result) => {
-    console.log(result)
-    renderServerCards(result)
-     }); 
+  .then(res => {
+    if(res.ok){
+      return res.json()
+    }
+    return Promise.reject(`Что-то пошло не так: ${res.status}`);
+  })
+   .then((res) => {
+    console.log(res)
+    return renderServerCards(res)
+     })
+     .catch((err) => {
+      console.log(err);
+    }); 
 }
 
 function deleteCardFromServer(id){
   api.deleteCard(id)
-  .then(res => res.json())
+  .then(res => {
+    if(res.ok){
+      return res.json()
+    }
+    return Promise.reject(`Что-то пошло не так: ${res.status}`);
+  })
    .then((result) => {
     console.log(result)
     // renderServerCards(result)
-     }); 
+
+  })
+  .catch((err) => {
+   console.log(err);
+ }); 
 }
 
 
 
+//Я потратил кучу часов,чтобы получить id и отправить его в класс card,я уже просто не знаю что делать и как исправлять другие ошибки
 function setUserdata(){
   api.getProfile()
-  .then(res => res.json())
-   .then((result) => {
-    const res = [result.name , result.about]
+  .then(res => {
+    if(res.ok){
+      return res.json()
+    }
+    return Promise.reject(`Что-то пошло не так: ${res.status}`);
+  })
+   .then((res) => {
+    console.log(res)
     userInfo.setUserInfo(res)
-
-     }); 
+    return res._id
+     })
+     .catch((err) => {
+      console.log(err);
+    }); 
 }
 
-function PostToServerCards(name,link){
+
+
+function setLike(id){ 
+  api.setLike(id) 
+  .then(res => res.json()) 
+  .then((result) => { 
+    console.log(result); 
+   })
+  .catch((err) => {
+   console.log(err);
+ }); 
+}
+
+
+function patchProfile(){
+  const values = submitHandler(popupTypeEdit);
+  const name = values.name; 
+  const about = values.about;
+  api.patchProfile(name,about) 
+  .then(res => res.json()) 
+  .then((result) => { 
+    console.log(result); 
+   })
+  .catch((err) => {
+   console.log(err);
+ }); 
+}
+
+
+function patchAvatar(avatar){
+  api.patchAvatar(avatar)
+  .then(res => res.json()) 
+  .then((result) => { 
+    console.log(result); 
+   })
+  .catch((err) => {
+   console.log(err);
+ }); 
+}
+
+
+function postToServerCards(name,link){
   api.postCards(name,link)
   .then(res => res.json())
   .then((result) => {
     console.log(result)
-     }); 
+  })
+  .catch((err) => {
+   console.log(err);
+ }); 
 }
 
+
 function renderServerCards(result){
-  const section = new Section(result,renderer);
+  const section = new Section(result,renderer); 
   section.addItem()
  }
 
@@ -181,17 +243,11 @@ function openPopCon(){
   popupTypeCon.openPopup()
 }
 
-function openPopupChange(){
+function openPopForChangeAvatar(){
   popupTypeChange.openPopup()
-}
-
-function openPop(pop){
-  pop.openPopup()
 }
 
 
 
 getServerCards()
 setUserdata()
-
-    

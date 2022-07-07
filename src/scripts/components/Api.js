@@ -5,6 +5,14 @@ export default class Api {
       
     }
 
+   setLike(id) {
+    return fetch(`${this._baseUrl}/cards/likes/${id}`,{
+      method: 'PUT',
+      headers: this._headers,
+      })
+      }
+
+
 getInitialCards() {
   return fetch(`${this._baseUrl}/cards`,{
     method: `GET`,
@@ -23,17 +31,29 @@ postCards(name,link){
     });
   }
 
-patchProfile(name,about,avatar){
+patchProfile(name,about){
   return fetch(`${this._baseUrl}/users/me`, {
   method: 'PATCH',
   headers: this._headers,
   body: JSON.stringify({
-  avatar: avatar,
   name: name,
   about: about
   })
   });
   }
+  
+  patchAvatar(avatar){
+    return fetch(`${this._baseUrl}/users/me`, {
+    method: 'PATCH',
+    headers: this._headers,
+    body: JSON.stringify({
+    avatar:avatar
+    })
+    });
+    }
+
+
+
 
 getProfile(){
   return fetch(`${this._baseUrl}/users/me`,{

@@ -1,7 +1,7 @@
 export default class UserInfo {
-    constructor(name,job){
+    constructor(name,about){
         this.name = name;
-        this.job = job;
+        this.about = about;
         this._selector = document.querySelector('.pop-up_type_edit');
         this.formElement = this._selector.querySelector('.form__field');
         this.userList = Array.from(
@@ -9,13 +9,15 @@ export default class UserInfo {
       );
     }
     getUserInfo(){
-      const formValues = {};
-      formValues[0] = this.name.textContent
-      formValues[1] = this.job.textContent
+      const formValues = {name,job};
+      formValues.name = this.name.textContent
+      formValues.job = this.about.textContent
+      console.log(formValues)
       return formValues;
     }
     setUserInfo(values){
-      this.name.textContent = values[0]; 
-      this.job.textContent = values[1]; 
+      this.id = values._id
+      this.name.textContent = values.name; 
+      this.about.textContent = values.about; 
     }
 }
