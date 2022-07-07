@@ -1,10 +1,10 @@
 import Popup from "../components/Popup.js";
 
 export class PopupWithImage extends Popup{
-    constructor(popup,popBigImage,popText) {
+    constructor(popup) {
       super(popup)
-      this.popBigImage = popBigImage;
-      this.popText = popText;
+      this.popBigImage = document.querySelector('.pop-up__big-image');
+      this.popText = document.querySelector('.pop-up__text');
    }
   
   openPopup(name,link) {

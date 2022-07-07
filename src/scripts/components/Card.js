@@ -1,5 +1,6 @@
 export default class Card {
   constructor(place,source,like,ownerId,Id,handleCardClick,openPopCon,deleteCardFromServer,setLike){
+    this.myId = 'c9e1769999019a990e7af0c9'; 
     this.setLike = setLike;
     this.deleteCardFromServer = deleteCardFromServer;
     this.Id = Id;
@@ -52,7 +53,7 @@ export default class Card {
   makeBlock(){
     console.log()
     this._element = this._getTemplate();
-    if(this._ownerId !== 1){
+    if(this._ownerId !== this.myId){
       this._element.querySelector('.element__bin').classList.add('element__bin_hiden');
     }
     this._likeCount = this._element.querySelector('.element__like-count'); 

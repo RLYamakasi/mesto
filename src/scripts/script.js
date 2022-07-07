@@ -33,6 +33,7 @@ const formAdd = document.querySelector('#add');
 const formAvatar = document.querySelector('#avatar');
 const name = document.querySelector('.profile__title');
 const job = document.querySelector('.profile__subtitle');
+const object = {name:name, job:job}
 const avatar = document.querySelector('.profile__avatar'); 
 const saveButtonEdit = popUpEdit.querySelector('.form__save-button');
 const saveButtonAdd = popUpAdd.querySelector('.form__save-button');
@@ -46,7 +47,7 @@ validateFormCard.enableValidation();
 validateFormProfile.enableValidation();
 validateFormAvatar.enableValidation();
 
-const userInfo = new UserInfo(name,job);
+const userInfo = new UserInfo(object);
 const popupTypeChange = new PopupWithChangeAvatar(popUpChange,avatar,popConButton,patchAvatar);
 const popupTypeCon = new PopupWithConfirm(popUpConfirm);
 const popupTypeAdd = new PopupWithForm(popUpAdd,addSaveForm);
@@ -54,8 +55,7 @@ const popupTypeEdit = new PopupWithForm(popUpEdit,editSaveForm);
 popupTypeEdit.setEventListeners()
 popupTypeChange.setEventListeners()
 popupTypeCon.setEventListeners()
-popupTypeAdd.generate()
-popupTypeEdit.generate()
+popupTypeAdd.setEventListeners()
 
 
 popUpAddButton.addEventListener("click", openPopForAddButton);
@@ -92,9 +92,9 @@ function editSaveForm() {
 
 
 function submitHandler(popup){
-  let values = popup.getInputValues()
-  console.log(values)
-  return values;
+  const values = popup._getInputValues()
+  const ValueConvert = {name:values[0],about:values[1]}
+  return ValueConvert;
 }
 
 
@@ -111,7 +111,8 @@ function handleCardClick(name,link) {
 
  function renderer(name,source,likes,ownerId,Id){
   const cardElement = createCard(name,source,likes,ownerId,Id);
-  cardsContainer.prepend(cardElement);
+  section.renderItems(cardElement)
+  // cardsContainer.prepend(cardElement);
  }
 
  const api = new Api({
