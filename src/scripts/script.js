@@ -90,6 +90,12 @@ function editSaveForm() {
   popupTypeEdit.closePopup();
 }
 
+function listener(id,deleteCard){
+  popupTypeCon.openPopup()
+  popConButton.addEventListener("click",()=> {
+  deleteCardFromEverywhere(id,deleteCard)})
+// popupTypeCon.confirmDelete(deleteCardFromEverywhere(id,deleteCard))
+}
 
 function submitHandler(popup){
   const values = popup._getInputValues()
@@ -100,7 +106,7 @@ function submitHandler(popup){
 
 function createCard(name,source,likes,ownerId,Id) {
   const myid = userInfo.userId;
-  const card = new Card(name,source,likes,ownerId,Id,handleCardClick,openPopCon,deleteCardFromServer,setLike,myid);
+  const card = new Card(name,source,likes,ownerId,Id,handleCardClick,setLike,myid,listener);
   const cardElement = card.makeBlock();
   return cardElement
 }
@@ -110,9 +116,6 @@ function handleCardClick(name,link) {
  }
 
 
-function signToPopup(){
-  
-}
 
 
  function renderer(name,source,likes,ownerId,Id){
@@ -130,27 +133,27 @@ function signToPopup(){
 }); 
 
 
+
+
 function getServerCards(){
-  api.getInitialCards()
-  .then(res => {
-    if(res.ok){
-      return res.json()
-    }
-    return Promise.reject(`Что-то пошло не так: ${res.status}`);
-  })
-   .then((res) => {
-    console.log(res)
-    return renderServerCards(res)
-     })
-     .catch((err) => {
-      console.log(err);
-    }); 
+  Promise.all([                 
+  api.getProfile().then(response => response.json()), 
+  api.getInitialCards().then(response => response.json())
+])
+  .then(([infoResult, cardsResult])=>{   
+    userInfo.getUserId(infoResult._id) 
+    renderServerCards(cardsResult)
+    userInfo.setUserInfo(infoResult)
+    console.log(infoResult, cardsResult)
+  }) 
 }
 
-function deleteCardFromServer(id){
+function deleteCardFromEverywhere(id,deleteCard){
+  popupTypeCon.loadUX()
   api.deleteCard(id)
   .then(res => {
     if(res.ok){
+      deleteCard()
       return res.json()
     }
     return Promise.reject(`Что-то пошло не так: ${res.status}`);
@@ -162,27 +165,11 @@ function deleteCardFromServer(id){
   })
   .catch((err) => {
    console.log(err);
- }); 
-}
-
-
-
-function setUserdata(){
-  api.getProfile()
-  .then(res => {
-    if(res.ok){
-      return res.json()
-    }
-    return Promise.reject(`Что-то пошло не так: ${res.status}`);
-  })
-   .then((res) => {
-    console.log(res)
-    userInfo.setUserInfo(res)
-    userInfo.getUserId(res._id)
-     })
-     .catch((err) => {
-      console.log(err);
-    }); 
+ }).finally(()=> {
+  popupTypeCon.returnUX()
+  popupTypeCon.closePopup()
+}) 
+ 
 }
 
 
@@ -195,7 +182,7 @@ function setLike(id){
    })
   .catch((err) => {
    console.log(err);
- }); 
+ })
 }
 
 
@@ -203,30 +190,39 @@ function patchProfile(){
   const values = submitHandler(popupTypeEdit);
   const name = values.name; 
   const about = values.about;
+  popupTypeEdit.loadUX()
   api.patchProfile(name,about) 
   .then(res => res.json()) 
-  .then((result) => { 
+  .then((result) => {
     console.log(result); 
    })
   .catch((err) => {
    console.log(err);
- }); 
+ })
+ .finally(()=> {
+  popupTypeEdit.returnUX()
+}) 
 }
 
 
 function patchAvatar(avatar){
+  popupTypeChange.loadUX()
   api.patchAvatar(avatar)
   .then(res => res.json()) 
-  .then((result) => { 
+  .then((result) => {
     console.log(result); 
    })
   .catch((err) => {
    console.log(err);
- }); 
+ })
+ .finally(()=> {
+  popupTypeEdit.returnUX()
+}) 
 }
 
 
 function postToServerCards(name,link){
+  popupTypeAdd.loadUX()
   api.postCards(name,link)
   .then(res => res.json())
   .then((result) => {
@@ -234,7 +230,10 @@ function postToServerCards(name,link){
   })
   .catch((err) => {
    console.log(err);
- }); 
+ })
+ .finally(()=> {
+  popupTypeEdit.returnUX()
+})  
 }
 
 
@@ -244,9 +243,6 @@ function renderServerCards(result){
  }
 
 
-function openPopCon(){
-  popupTypeCon.openPopup()
-}
 
 function openPopForChangeAvatar(){
   popupTypeChange.openPopup()
@@ -255,4 +251,4 @@ function openPopForChangeAvatar(){
 
 
 getServerCards()
-setUserdata()
+

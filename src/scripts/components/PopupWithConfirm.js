@@ -2,18 +2,20 @@ import Popup from "../components/Popup.js";
 
 
 export class PopupWithConfirm extends Popup{
-    constructor(popup,callback) {
+    constructor(popup) {
       super(popup);
-      this.popConButton = popup.querySelector('.pop-up__save-button');
+      this._popConButton = popup.querySelector('.pop-up__save-button');
+      this._buttonText = "Да";
    }
 
   setEventListeners(){
     super.setEventListeners()
-    this.popConButton.addEventListener('click', this.confirmDelete); 
   }
-
-  confirmDelete(){
-    this.openPopup()
+  loadUX(){
+    this._popConButton.textContent = "Подождите...."
+  }
+  returnUX(){
+    this._popConButton.textContent = this._buttonText
   }
     
 }

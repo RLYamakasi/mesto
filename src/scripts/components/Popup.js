@@ -3,6 +3,14 @@ export default class Popup {
         this._popup = popup;
         this._openedPopup = document.querySelector('.pop-up_un-hiden');
         this._popupList = document.querySelectorAll('.pop-up');
+        this._button = this._popup.querySelector('.form__save-button')
+        this._buttonText = "Сохранить"
+    }
+    loadUX(){
+      this._button.textContent = "Подождите...."
+    }
+    returnUX(){
+      this._button.textContent = this._buttonText
     }
     openPopup() {
         this._popup.classList.add('pop-up_un-hiden');

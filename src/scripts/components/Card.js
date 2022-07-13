@@ -1,8 +1,8 @@
 export default class Card {
-  constructor(place,source,like,ownerId,Id,handleCardClick,deleteCardFromServer,setLike,myid){
+  constructor(place,source,like,ownerId,Id,handleCardClick,setLike,myid,listener){
     this.myid = myid;
+    this.listener = listener;
     this.setLike = setLike;
-    this.deleteCardFromServer = deleteCardFromServer;
     this.Id = Id;
     this._ownerId = ownerId;
     this._like = like;
@@ -10,6 +10,7 @@ export default class Card {
     this._source = source; 
     this._blockTemplate = document.querySelector('#blockTemplate').content; 
     this._handleCardClick = handleCardClick;
+    
   }
   // _getId(id){
   //   this.id = id
@@ -23,21 +24,20 @@ export default class Card {
     this._img.addEventListener('click', () => {
         this._handleCardClick(this._place, this._source )
      });
-    this._element.querySelector('.element__bin').addEventListener('click', this._confirmDelete);  
+    this._element.querySelector('.element__bin').addEventListener('click', ()=> this.listener(this.Id,() => this._deleteBlock(this._element)));  
     this._element.querySelector('.element__button').addEventListener('click', this._setLike); 
+    // this.listener(this.Id,() => this._deleteBlock(this._element))
   } 
+  // _deleteCard = ()=>{
+  //   console.log(this.Id)
+  //   this.listener(this.Id,this._deleteBlock(this._element))
+  //   console.log(this._element)
+  // }  
 
-
-   _confirmDelete = () => {
-    this._element.remove()
-    this.deleteCardFromServer(this.Id)
-    ;  
-   } 
-
-   _deleteBlock(){
-    this._element.remove()
-    this.deleteCardFromServer(this.Id)
-   }
+    _deleteBlock = (element)=>{
+     element.remove()
+    
+    }
 
   _setLike = (event) => {  
     event.target.classList.toggle('element__button_active');
@@ -46,7 +46,6 @@ export default class Card {
   } 
 
   makeBlock(){
-    console.log()
     this._element = this._getTemplate();
     if(this._ownerId !== this.myid){
       this._element.querySelector('.element__bin').classList.add('element__bin_hiden');
