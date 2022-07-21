@@ -34,7 +34,7 @@ const formAvatar = document.querySelector('#avatar');
 const name = document.querySelector('.profile__title');
 const job = document.querySelector('.profile__subtitle');
 const object = {name:name, job:job}
-const avatar = document.querySelector('.profile__avatar'); 
+const avatar = document.querySelector('.profile__avatar_img'); 
 const saveButtonEdit = popUpEdit.querySelector('.form__save-button');
 const saveButtonAdd = popUpAdd.querySelector('.form__save-button');
 const section = new Section(cardsContainer,renderer);
@@ -65,12 +65,13 @@ avatar.addEventListener("click", openPopForChangeAvatar)
 
 //для создания блока
 function addSaveForm() {
-  postToServerCards(submitHandler(popupTypeAdd).name,submitHandler(popupTypeAdd).about)
-  renderer(submitHandler(popupTypeAdd).name,submitHandler(popupTypeAdd).about,0,userInfo.userId)
+  postCardsToEverywhere(submitHandler(popupTypeAdd).name,submitHandler(popupTypeAdd).about)
+  // renderer(submitHandler(popupTypeAdd).name,submitHandler(popupTypeAdd).about,0,userInfo.userId)
   popupTypeAdd.closePopup();
 }
 
 function openPopForEditButton(){
+  validateFormProfile.disableSubmitButton();
   popupTypeEdit.openPopup(); 
   const data = userInfo.getUserInfo();
   console.log(data)
@@ -92,9 +93,10 @@ function editSaveForm() {
 
 function listener(id,deleteCard){
   popupTypeCon.openPopup()
-  popConButton.addEventListener("click",()=> {
-  deleteCardFromEverywhere(id,deleteCard)})
-// popupTypeCon.confirmDelete(deleteCardFromEverywhere(id,deleteCard))
+  popConButton.addEventListener("click",()=> 
+  deleteCardFromEverywhere(id,deleteCard));
+  popConButton.removeEventListener("click",()=> 
+    deleteCardFromEverywhere(id,deleteCard));
 }
 
 function submitHandler(popup){
@@ -106,7 +108,7 @@ function submitHandler(popup){
 
 function createCard(name,source,likes,ownerId,Id) {
   const myid = userInfo.userId;
-  const card = new Card(name,source,likes,ownerId,Id,handleCardClick,setLike,myid,listener);
+  const card = new Card(name,source,likes,ownerId,Id,handleCardClick,setLike,deleteLike,myid,listener);
   const cardElement = card.makeBlock();
   return cardElement
 }
@@ -125,9 +127,9 @@ function handleCardClick(name,link) {
  }
 
  const api = new Api({
-  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-44',
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-46',
   headers: {
-    authorization: 'f8ed7ea7-e8eb-44c1-9707-d548331f0bfb',
+    authorization: '6976fede-faeb-4a9a-8092-6b8fce19d4dd',
     'Content-Type': 'application/json'
   }
 }); 
@@ -140,11 +142,12 @@ function getServerCards(){
   api.getProfile().then(response => response.json()), 
   api.getInitialCards().then(response => response.json())
 ])
-  .then(([infoResult, cardsResult])=>{   
+  .then(([infoResult, cardsResult])=>{
+    console.log(cardsResult)
+    popupTypeChange.setAvatar(infoResult.avatar)
     userInfo.getUserId(infoResult._id) 
     renderServerCards(cardsResult)
     userInfo.setUserInfo(infoResult)
-    console.log(infoResult, cardsResult)
   }) 
 }
 
@@ -160,8 +163,6 @@ function deleteCardFromEverywhere(id,deleteCard){
   })
    .then((result) => {
     console.log(result)
-    // renderServerCards(result)
-
   })
   .catch((err) => {
    console.log(err);
@@ -174,24 +175,48 @@ function deleteCardFromEverywhere(id,deleteCard){
 
 
 
-function setLike(id){ 
+function setLike(id,button){ 
   api.setLike(id) 
   .then(res => res.json()) 
-  .then((result) => { 
+  .then((result) => {
     console.log(result); 
    })
   .catch((err) => {
    console.log(err);
  })
+ .finally(()=> {
+  button.querySelector('.element__button').classList.add('element__button_active');
+  button.querySelector('.element__like-count').innerText ++;
+}) 
+}
+
+
+
+function deleteLike(id,button){ 
+  api.setLike(id) 
+  .then(res => res.json()) 
+  .then((result) => {
+    console.log(result); 
+   })
+  .catch((err) => {
+   console.log(err);
+ })
+ .finally(()=> {
+  console.log(button);
+  button.querySelector('.element__button').classList.remove('element__button_active');
+  button.querySelector('.element__like-count').innerText --;
+})
 }
 
 
 function patchProfile(){
-  const values = submitHandler(popupTypeEdit);
+  const values = userInfo.getUserInfo()
+  // const values = submitHandler(popupTypeEdit);
   const name = values.name; 
-  const about = values.about;
+  const job = values.job;  
+  const avatar = popupTypeChange.getAvatar()
   popupTypeEdit.loadUX()
-  api.patchProfile(name,about) 
+  api.patchProfile(name,job,avatar[0]) 
   .then(res => res.json()) 
   .then((result) => {
     console.log(result); 
@@ -205,9 +230,10 @@ function patchProfile(){
 }
 
 
-function patchAvatar(avatar){
-  popupTypeChange.loadUX()
-  api.patchAvatar(avatar)
+function patchAvatar(){
+  const avatar = popupTypeChange.getAvatar()
+  popupTypeEdit.loadUX()
+  api.patchAvatar(avatar[0]) 
   .then(res => res.json()) 
   .then((result) => {
     console.log(result); 
@@ -221,12 +247,13 @@ function patchAvatar(avatar){
 }
 
 
-function postToServerCards(name,link){
+
+function postCardsToEverywhere(name,link){
   popupTypeAdd.loadUX()
   api.postCards(name,link)
   .then(res => res.json())
   .then((result) => {
-    console.log(result)
+    renderer(name,link,[],userInfo.userId,result._id)
   })
   .catch((err) => {
    console.log(err);

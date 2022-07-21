@@ -6,7 +6,7 @@ export default class Section {
     }
     addItem(){
         this.items.forEach((elem) => {
-            this.makeCard(elem.name,elem.link,elem.likes.length,elem.owner._id,elem._id);
+            this.makeCard(elem.name,elem.link,elem.likes,elem.owner._id,elem._id);
           })
     }
     makeCard(name,link,likes,ownerId,Id){

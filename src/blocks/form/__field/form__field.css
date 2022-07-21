@@ -3,7 +3,8 @@
     flex-direction: column;
     width: 358px;
     justify-content: space-between;
-    height: 250px;
+    gap:30px;
+    /* height: 250px; */
 }
 
 @media screen and (max-width:767px) {
@@ -11,3 +12,4 @@
         width: 238px;
     }
 }
+

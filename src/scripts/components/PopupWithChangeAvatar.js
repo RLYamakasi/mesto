@@ -1,9 +1,9 @@
 import Popup from "../components/Popup.js";
 
 export class PopupWithChangeAvatar extends Popup{
-    constructor(popup,avatar,popConButton,patchAvatar) {
+    constructor(popup,avatar,popConButton,patchProfile) {
       super(popup);
-      this.patchAvatar = patchAvatar;
+      this.patchProfile = patchProfile;
       this.popConButton = popConButton;
       this.avatar = avatar;
       this.formElement = popup.querySelector('.form__field');
@@ -12,10 +12,13 @@ export class PopupWithChangeAvatar extends Popup{
       );
    }
 
-  setAvatar(){
-    this.getAvatar()
+  
+
+
+  patchAvatarToServer(){
     this.avatar.src = this.getAvatar()[0];
-    this.patchAvatar(this.avatar.src)
+    // console.log(this.avatar)
+    this.patchProfile()
   }
 
   getAvatar(){
@@ -23,11 +26,13 @@ export class PopupWithChangeAvatar extends Popup{
       this._inputList.forEach((item,index) =>{
         formValues[index] = item.value;
       });
-      console.log(formValues)
       return formValues;
 
   }
 
+  setAvatar(ava){
+    this.avatar.src = ava;
+  }
 
   setEventListeners(){
     super.setEventListeners()
@@ -37,7 +42,7 @@ export class PopupWithChangeAvatar extends Popup{
     })  
     this.formElement.addEventListener('submit', (evt) => {
       evt.preventDefault();
-      this.setAvatar()
+      this.patchAvatarToServer()
       this.closePopup()
     })
   } 

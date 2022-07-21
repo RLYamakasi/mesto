@@ -2,7 +2,6 @@ export default class UserInfo {
     constructor(object){
         this.name = object.name;
         this.about = object.job;
-        const userId = "";//я его передаю классу card
         
     }
     getUserInfo(){
@@ -17,6 +16,9 @@ export default class UserInfo {
     }
     getUserId(id){
       this.userId = id;
+    }
+    getAvatar(avatar){
+      this.avatar = avatar;
     }
 
 }
