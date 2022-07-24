@@ -5,29 +5,36 @@ export default class Api {
 
   }
 
-  setLike(id) {
+  _getResponseData(res) {
+    if (!res.ok) {
+        return Promise.reject(`Ошибка: ${res.status}`);
+    }
+    return res.json();
+} 
+
+  setLike = (id) =>{
     return fetch(`${this._baseUrl}/cards/likes/${id}`, {
       method: 'PUT',
       headers: this._headers,
-    })
+    }).then(res => this._getResponseData(res))
   }
 
-  deleteLike(id) {
+  deleteLike = (id)=> {
     return fetch(`${this._baseUrl}/cards/likes/${id}`, {
       method: 'DELETE',
       headers: this._headers,
-    })
+    }).then(res => this._getResponseData(res))
   }
 
 
-  getInitialCards() {
+  getInitialCards = () => {
     return fetch(`${this._baseUrl}/cards`, {
       method: `GET`,
       headers: this._headers,
-    })
+    }).then(res => this._getResponseData(res))
   }
 
-  postCards(name, link) {
+  postCards = (name, link) => {
     return fetch(`${this._baseUrl}/cards`, {
       method: 'POST',
       headers: this._headers,
@@ -35,11 +42,10 @@ export default class Api {
         name: name,
         link: link
       })
-    });
+    }).then(res => this._getResponseData(res))
   }
 
-  patchProfile(name, about) {
-    console.log(avatar)
+  patchProfile = (name, about)=> {
     return fetch(`${this._baseUrl}/users/me`, {
       method: 'PATCH',
       headers: this._headers,
@@ -47,35 +53,32 @@ export default class Api {
         name: name,
         about: about
       })
-    });
+    }).then(res => this._getResponseData(res))
   }
 
-  patchAvatar(avatar){
+  patchAvatar = (avatar)=>{
     return fetch(`${this._baseUrl}/users/me/avatar`, {
     method: 'PATCH',
     headers: this._headers,
     body: JSON.stringify({
     avatar:avatar
     })
-    });
+    }).then(res => this._getResponseData(res))
     }
 
-
-
-
-  getProfile() {
+  getProfile = () => {
     return fetch(`${this._baseUrl}/users/me`, {
       method: `GET`,
       headers: this._headers,
-    })
+    }).then(res => this._getResponseData(res))
   }
 
-  deleteCard(id) {
+  deleteCard = (id)=> {
     console.log(id)
     return fetch(`${this._baseUrl}/cards/${id}`, {
       method: 'delete',
       headers: this._headers,
-    });
+    }).then(res => this._getResponseData(res))
   }
 }
 

@@ -4,16 +4,15 @@ export default class Section {
     this.renderer = renderer;
     this.cardsContainer = document.querySelector('.elements');
     }
-    addItem(){
+    renderItems(){
         this.items.forEach((elem) => {
-            this.makeCard(elem.name,elem.link,elem.likes,elem.owner._id,elem._id);
+            this.renderer(elem.name,elem.link,elem.likes,elem.owner._id,elem._id);
           })
     }
-    makeCard(name,link,likes,ownerId,Id){
-        this.renderer(name,link,likes,ownerId,Id)
-    }
-    renderItems(cardElement){
+    addItem(cardElement){
         this.cardsContainer.prepend(cardElement);
     }
 }
+
+
 

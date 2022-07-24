@@ -3,6 +3,7 @@ import Popup from "../components/Popup.js";
 export class PopupWithForm extends Popup{
     constructor(popup,subFunc) {
       super(popup);
+      this.avatar = document.querySelector('.profile__avatar-img');
       this._subFunc = subFunc;
       this._popUpAdd = document.querySelector('.pop-up_type_add');
       this._popup = popup;
@@ -17,27 +18,26 @@ export class PopupWithForm extends Popup{
       this.formElement.addEventListener('submit', (evt) => {
         evt.preventDefault();
         this._subFunc()
+        // super.closePopup();
       })
     }
+
+    closePopup(){
+      super.closePopup()
+    }
   
-    _getInputValues() {
+    getInputValues() {
       const formValues = {};
       this._inputList.forEach((item,index) =>{
         formValues[index] = item.value;
       });
       return formValues;
     }
-  
-    
-closePopup(){ 
-  if (this.popup = this._popUpAdd){
-    super.closePopup();
-    this.formElement.reset()
-  }
-  else{
-    super.closePopup();
-  }  
-} 
-  }
+
+    setAvatar(ava){
+      this.avatar.src = ava;
+    }
+
+}
 
   

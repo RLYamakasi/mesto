@@ -37,6 +37,7 @@ export default class Card {
 
   _deleteBlock = (element)=>{
     element.remove()
+    element = null;
   }
 
   _deleteLike = (element) =>{
@@ -52,12 +53,11 @@ export default class Card {
     if(this._ownerId !== this.myid){
       this._element.querySelector('.element__bin').classList.add('element__bin_hiden');
     }
-  //   for (var i = 0; i < this._like.length; i++) {
-  //     console.log(this._like[i][i])
-  //     if (this._like[i][i] === this.myid) {
-  //         this._element.querySelector('.element__button').classList.add('element__button_active');
-  //     }
-  // }
+    for (var i = 0; i < this._like.length; i++) {
+      if (this._like[i]._id === this.myid) {
+          this._element.querySelector('.element__button').classList.add('element__button_active');
+      }
+  }
     this._likeCount = this._element.querySelector('.element__like-count'); 
     this._img = this._element.querySelector('.element__image'); 
     this._title = this._element.querySelector(".element__text"); 

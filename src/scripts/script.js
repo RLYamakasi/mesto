@@ -7,7 +7,6 @@ import FormValidator from "./components/FormValidator.js"
 import {validationData} from "./constants.js"
 import UserInfo from "./components/UserInfo.js";
 import Section from "./components/Section.js";
-import {PopupWithChangeAvatar} from "./components/PopupWithChangeAvatar.js";
 import {PopupWithImage} from "./components/PopupWithImage.js";
 import {PopupWithForm} from "./components/PopupWithForm.js";
 import {PopupWithConfirm} from "./components/PopupWithConfirm.js";
@@ -19,8 +18,6 @@ const popText = document.querySelector('.pop-up__text');
 const popUpImage = document.querySelector('.pop-up_type_image');
 const nameInput = document.querySelector('#name'); 
 const jobInput = document.querySelector('#job');
-const placeInput = document.querySelector('#place'); 
-const sourceInput = document.querySelector('#source');
 const popUpEdit = document.querySelector('.pop-up_type_edit');
 const popUpAdd = document.querySelector('.pop-up_type_add');
 const popUpConfirm = document.querySelector('.pop-up_type_confirm');
@@ -37,6 +34,7 @@ const object = {name:name, job:job}
 const avatar = document.querySelector('.profile__avatar-img'); 
 const saveButtonEdit = popUpEdit.querySelector('.form__save-button');
 const saveButtonAdd = popUpAdd.querySelector('.form__save-button');
+const AddformElement = popUpAdd.querySelector('.form__field');
 const section = new Section(cardsContainer,renderer);
 const validateFormProfile = new FormValidator(validationData, formEdit);
 const validateFormCard = new FormValidator(validationData, formAdd);
@@ -48,7 +46,7 @@ validateFormProfile.enableValidation();
 validateFormAvatar.enableValidation();
 
 const userInfo = new UserInfo(object);
-const popupTypeChange = new PopupWithChangeAvatar(popUpChange,avatar,popConButton,patchAvatar);
+const popupTypeChange = new PopupWithForm(popUpChange,patchAvatar);
 const popupTypeCon = new PopupWithConfirm(popUpConfirm);
 const popupTypeAdd = new PopupWithForm(popUpAdd,addSaveForm);
 const popupTypeEdit = new PopupWithForm(popUpEdit,editSaveForm);
@@ -65,16 +63,16 @@ avatar.addEventListener("click", openPopForChangeAvatar)
 
 //для создания блока
 function addSaveForm() {
-  postCardsToEverywhere(submitHandler(popupTypeAdd).name,submitHandler(popupTypeAdd).about)
+  postCardsToEverywhere(submitHandler(popupTypeAdd).name,submitHandler(popupTypeAdd).about);
+  AddformElement.reset()
   // renderer(submitHandler(popupTypeAdd).name,submitHandler(popupTypeAdd).about,0,userInfo.userId)
-  popupTypeAdd.closePopup();
 }
 
 function openPopForEditButton(){
   validateFormProfile.disableSubmitButton();
   popupTypeEdit.openPopup(); 
   const data = userInfo.getUserInfo();
-  console.log(data)
+  // console.log(data)
   nameInput.value = data.name; 
   jobInput.value = data.job; 
 
@@ -86,29 +84,26 @@ function openPopForAddButton(){
 }
 
 function editSaveForm() { 
-  userInfo.setUserInfo(submitHandler(popupTypeEdit))
+ 
   patchProfile()
-  popupTypeEdit.closePopup();
 }
 
-function listener(id,deleteCard){
+function listenerForDeleteButton(id,deleteCard){
   popupTypeCon.openPopup()
   popConButton.addEventListener("click",()=> 
   deleteCardFromEverywhere(id,deleteCard));
-  popConButton.removeEventListener("click",()=> 
-    deleteCardFromEverywhere(id,deleteCard));
 }
 
 function submitHandler(popup){
-  const values = popup._getInputValues()
-  const ValueConvert = {name:values[0],about:values[1]}
-  return ValueConvert;
+  const values = popup.getInputValues()
+  const valueConvert = {name:values[0],about:values[1]}
+  return valueConvert;
 }
 
 
 function createCard(name,source,likes,ownerId,Id) {
   const myid = userInfo.userId;
-  const card = new Card(name,source,likes,ownerId,Id,handleCardClick,setLike,deleteLike,myid,listener);
+  const card = new Card(name,source,likes,ownerId,Id,handleCardClick,setLike,deleteLike,myid,listenerForDeleteButton);
   const cardElement = card.makeBlock();
   return cardElement
 }
@@ -122,8 +117,8 @@ function handleCardClick(name,link) {
 
  function renderer(name,source,likes,ownerId,Id){
   const cardElement = createCard(name,source,likes,ownerId,Id);
-  section.renderItems(cardElement)
-  // cardsContainer.prepend(cardElement);
+  section.addItem(cardElement)
+
  }
 
  const api = new Api({
@@ -139,14 +134,16 @@ function handleCardClick(name,link) {
 
 function getServerCards(){
   Promise.all([                 
-  api.getProfile().then(response => response.json()), 
-  api.getInitialCards().then(response => response.json())
+  api.getProfile(), 
+  api.getInitialCards()
 ])
   .then(([infoResult, cardsResult])=>{
-    console.log(cardsResult)
+    console.log(infoResult)
+    cardsResult.reverse()
     popupTypeChange.setAvatar(infoResult.avatar)
-    userInfo.getUserId(infoResult._id) 
-    renderServerCards(cardsResult)
+    userInfo.getUserId(infoResult._id)
+    const section = new Section(cardsResult,renderer); 
+    section.renderItems()
     userInfo.setUserInfo(infoResult)
   }) 
 }
@@ -154,21 +151,16 @@ function getServerCards(){
 function deleteCardFromEverywhere(id,deleteCard){
   popupTypeCon.loadUX()
   api.deleteCard(id)
-  .then(res => {
-    if(res.ok){
-      deleteCard()
-      return res.json()
-    }
-    return Promise.reject(`Что-то пошло не так: ${res.status}`);
-  })
    .then((result) => {
+    deleteCard()
+    popupTypeCon.closePopup()
     console.log(result)
   })
   .catch((err) => {
    console.log(err);
  }).finally(()=> {
   popupTypeCon.returnUX()
-  popupTypeCon.closePopup()
+  
 }) 
  
 }
@@ -177,7 +169,6 @@ function deleteCardFromEverywhere(id,deleteCard){
 
 function setLike(id,button){ 
   api.setLike(id) 
-  .then(res => res.json()) 
   .then((result) => {
     console.log(result); 
    })
@@ -194,7 +185,6 @@ function setLike(id,button){
 
 function deleteLike(id,button){ 
   api.setLike(id) 
-  .then(res => res.json()) 
   .then((result) => {
     console.log(result); 
    })
@@ -210,15 +200,14 @@ function deleteLike(id,button){
 
 
 function patchProfile(){
-  const values = userInfo.getUserInfo()
-  // const values = submitHandler(popupTypeEdit);
+  const values = submitHandler(popupTypeEdit)
   const name = values.name; 
-  const job = values.job;  
-  const avatar = popupTypeChange.getAvatar()
+  const about = values.about;  
   popupTypeEdit.loadUX()
-  api.patchProfile(name,job,avatar[0]) 
-  .then(res => res.json()) 
+  api.patchProfile(name,about) 
   .then((result) => {
+    userInfo.setUserInfo(submitHandler(popupTypeEdit))
+    popupTypeEdit.closePopup()
     console.log(result); 
    })
   .catch((err) => {
@@ -231,18 +220,18 @@ function patchProfile(){
 
 
 function patchAvatar(){
-  const avatar = popupTypeChange.getAvatar()
-  popupTypeEdit.loadUX()
+  const avatar = popupTypeChange.getInputValues()
+  popupTypeChange.loadUX()
   api.patchAvatar(avatar[0]) 
-  .then(res => res.json()) 
   .then((result) => {
+    popupTypeChange.setAvatar(avatar[0])
     console.log(result); 
    })
   .catch((err) => {
    console.log(err);
  })
  .finally(()=> {
-  popupTypeEdit.returnUX()
+  popupTypeChange.returnUX()
 }) 
 }
 
@@ -251,7 +240,6 @@ function patchAvatar(){
 function postCardsToEverywhere(name,link){
   popupTypeAdd.loadUX()
   api.postCards(name,link)
-  .then(res => res.json())
   .then((result) => {
     renderer(name,link,[],userInfo.userId,result._id)
   })
@@ -259,15 +247,15 @@ function postCardsToEverywhere(name,link){
    console.log(err);
  })
  .finally(()=> {
-  popupTypeEdit.returnUX()
+  popupTypeAdd.closePopup(); 
+  popupTypeAdd.returnUX()
 })  
 }
 
 
-function renderServerCards(result){
-  const section = new Section(result,renderer); 
-  section.addItem()
- }
+// function renderServerCards(result){
+  
+//  }
 
 
 
