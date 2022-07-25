@@ -2,7 +2,7 @@ export default class UserInfo {
     constructor(object){
         this.name = object.name;
         this.about = object.job;
-        
+        this.avatar = document.querySelector('.profile__avatar-img');
     }
     getUserInfo(){
       const formValues = {name,job};
@@ -19,6 +19,9 @@ export default class UserInfo {
     }
     getAvatar(avatar){
       this.avatar = avatar;
+    }
+    setAvatar(ava){
+      this.avatar.src = ava;
     }
 
 }

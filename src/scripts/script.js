@@ -34,8 +34,7 @@ const object = {name:name, job:job}
 const avatar = document.querySelector('.profile__avatar-img'); 
 const saveButtonEdit = popUpEdit.querySelector('.form__save-button');
 const saveButtonAdd = popUpAdd.querySelector('.form__save-button');
-const AddformElement = popUpAdd.querySelector('.form__field');
-const section = new Section(cardsContainer,renderer);
+// const section = new Section(cardsContainer,renderer);
 const validateFormProfile = new FormValidator(validationData, formEdit);
 const validateFormCard = new FormValidator(validationData, formAdd);
 const validateFormAvatar = new FormValidator(validationData, formAvatar);
@@ -49,7 +48,7 @@ const userInfo = new UserInfo(object);
 const popupTypeChange = new PopupWithForm(popUpChange,patchAvatar);
 const popupTypeCon = new PopupWithConfirm(popUpConfirm);
 const popupTypeAdd = new PopupWithForm(popUpAdd,addSaveForm);
-const popupTypeEdit = new PopupWithForm(popUpEdit,editSaveForm);
+const popupTypeEdit = new PopupWithForm(popUpEdit,patchProfile);
 popupTypeEdit.setEventListeners()
 popupTypeChange.setEventListeners()
 popupTypeCon.setEventListeners()
@@ -64,7 +63,7 @@ avatar.addEventListener("click", openPopForChangeAvatar)
 //для создания блока
 function addSaveForm() {
   postCardsToEverywhere(submitHandler(popupTypeAdd).name,submitHandler(popupTypeAdd).about);
-  AddformElement.reset()
+  formAdd.reset()
   // renderer(submitHandler(popupTypeAdd).name,submitHandler(popupTypeAdd).about,0,userInfo.userId)
 }
 
@@ -81,11 +80,6 @@ function openPopForEditButton(){
 function openPopForAddButton(){
   validateFormCard.disableSubmitButton();
   popupTypeAdd.openPopup();
-}
-
-function editSaveForm() { 
- 
-  patchProfile()
 }
 
 function listenerForDeleteButton(id,deleteCard){
@@ -140,7 +134,7 @@ function getServerCards(){
   .then(([infoResult, cardsResult])=>{
     console.log(infoResult)
     cardsResult.reverse()
-    popupTypeChange.setAvatar(infoResult.avatar)
+    userInfo.setAvatar(infoResult.avatar)
     userInfo.getUserId(infoResult._id)
     const section = new Section(cardsResult,renderer); 
     section.renderItems()
@@ -162,12 +156,10 @@ function deleteCardFromEverywhere(id,deleteCard){
   popupTypeCon.returnUX()
   
 }) 
- 
 }
 
 
-
-function setLike(id,button){ 
+function setLike(id,setLike){ 
   api.setLike(id) 
   .then((result) => {
     console.log(result); 
@@ -176,15 +168,14 @@ function setLike(id,button){
    console.log(err);
  })
  .finally(()=> {
-  button.querySelector('.element__button').classList.add('element__button_active');
-  button.querySelector('.element__like-count').innerText ++;
+  setLike()
 }) 
 }
 
 
 
-function deleteLike(id,button){ 
-  api.setLike(id) 
+function deleteLike(id,deleteLike){ 
+  api.deleteLike(id) 
   .then((result) => {
     console.log(result); 
    })
@@ -192,9 +183,7 @@ function deleteLike(id,button){
    console.log(err);
  })
  .finally(()=> {
-  console.log(button);
-  button.querySelector('.element__button').classList.remove('element__button_active');
-  button.querySelector('.element__like-count').innerText --;
+  deleteLike()
 })
 }
 
@@ -224,8 +213,9 @@ function patchAvatar(){
   popupTypeChange.loadUX()
   api.patchAvatar(avatar[0]) 
   .then((result) => {
-    popupTypeChange.setAvatar(avatar[0])
+    userInfo.setAvatar(avatar[0])
     console.log(result); 
+    popupTypeChange.closePopup()
    })
   .catch((err) => {
    console.log(err);
@@ -242,12 +232,13 @@ function postCardsToEverywhere(name,link){
   api.postCards(name,link)
   .then((result) => {
     renderer(name,link,[],userInfo.userId,result._id)
+    popupTypeAdd.closePopup(); 
   })
   .catch((err) => {
    console.log(err);
  })
  .finally(()=> {
-  popupTypeAdd.closePopup(); 
+
   popupTypeAdd.returnUX()
 })  
 }

@@ -3,7 +3,6 @@ import Popup from "../components/Popup.js";
 export class PopupWithForm extends Popup{
     constructor(popup,subFunc) {
       super(popup);
-      this.avatar = document.querySelector('.profile__avatar-img');
       this._subFunc = subFunc;
       this._popUpAdd = document.querySelector('.pop-up_type_add');
       this._popup = popup;
@@ -34,9 +33,7 @@ export class PopupWithForm extends Popup{
       return formValues;
     }
 
-    setAvatar(ava){
-      this.avatar.src = ava;
-    }
+    
 
 }
 
