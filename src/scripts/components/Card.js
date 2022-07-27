@@ -2,8 +2,8 @@ export default class Card {
   constructor(place,source,like,ownerId,Id,handleCardClick,setLike,deleteLike,myid,listener){
     this.myid = myid;
     this.listener = listener;
-    this.deleteLike = deleteLike;
-    this.setLike = setLike;
+    this.deleteLikeApi = deleteLike;
+    this.setLikeApi = setLike;
     this.Id = Id;
     this._ownerId = ownerId;
     this._like = like;
@@ -28,10 +28,10 @@ export default class Card {
 
   _toogleLike(element){
     if(element.querySelector('.element__button').classList.contains('element__button_active')){
-      this._deleteLike(element)
+      this._deleteLike()
     }
     else{
-      this._putLike(element)
+      this._putLike()
     }
   }
 
@@ -40,13 +40,24 @@ export default class Card {
     element = null;
   }
 
-  _deleteLike = (element) =>{
-    this.deleteLike(this.Id,element.querySelector('.element__like'))
+  _deleteLike = () =>{
+    this.deleteLikeApi(this.Id,this._changeToUnActive)
   }  
 
-  _putLike = (element) => {
-    this.setLike(this.Id,element.querySelector('.element__like'))
+  _putLike = () => {
+    this.setLikeApi(this.Id,this._changeToActive)
   }
+
+  _changeToUnActive = () =>{
+    this._element.querySelector('.element__button').classList.remove('element__button_active'); 
+    this._element.querySelector('.element__like-count').innerText --; 
+  }  
+
+  _changeToActive = () =>{
+    this._element.querySelector('.element__button').classList.add('element__button_active'); 
+    this._element.querySelector('.element__like-count').innerText ++; 
+  }  
+
 
   makeBlock(){
     this._element = this._getTemplate();
@@ -68,4 +79,6 @@ export default class Card {
     this._setEventListeners(); 
     return this._element 
   } 
+
+
   } 
