@@ -161,30 +161,24 @@ function deleteCardFromEverywhere(id,deleteCard){
 
 function setLike(id,setLike){ 
   api.setLike(id) 
-  .then((result) => {
-    console.log(result); 
+  .then(() => {
+    setLike()
    })
   .catch((err) => {
    console.log(err);
  })
- .finally(()=> {
-  setLike()
-}) 
 }
 
 
 
 function deleteLike(id,deleteLike){ 
   api.deleteLike(id) 
-  .then((result) => {
-    console.log(result); 
+  .then(() => {
+    deleteLike()
    })
   .catch((err) => {
    console.log(err);
  })
- .finally(()=> {
-  deleteLike()
-})
 }
 
 
